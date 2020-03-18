@@ -34,7 +34,7 @@ const categories = [
 	"Clue scroll (elite)",
 	"Clue scroll (master)",
 	"Last man standing",
-	"Sire",
+	"Abyssal Sire",
 	"Alchemical hydra",
 	"Barrows chests",
 	"Bryophyta",
@@ -58,8 +58,8 @@ const categories = [
 	"Kalphite queen",
 	"King black dragon",
 	"Kraken",
-	"Kreearra",
-	"Kril tsutsaroth",
+	"Kree'arra",
+	"K'ril tsutsaroth",
 	"Mimic",
 	"Nightmare",
 	"Obor",
@@ -116,7 +116,7 @@ const Category = {
 	CLUE_SCROLL_ELITE: categories[32],
 	CLUE_SCROLL_MASTER: categories[33],
 	LAST_MAN_STANDING: categories[34],
-	SIRE: categories[35],
+	ABYSSAL_SIRE: categories[35],
 	ALCHEMICAL_HYDRA: categories[36],
 	BARROWS_CHESTS: categories[37],
 	BRYOPHYTA: categories[38],
@@ -162,7 +162,213 @@ const Category = {
 	ZULRAH: categories[78],
 }
 
+getCategoryByShortName = (name) => {
+	switch (name.toLowerCase().trim()) {
+		case "total":
+		case "main":
+			return "Overall"
+		case "att":
+		case "attk":
+			return "Attack"
+		case "def":
+		case "defense":
+			return "Defence"
+		case "str":
+			return "Strength"
+		case "hp":
+			return "Hitpoints"
+		case "range":
+		case "ranging":
+			return "Ranged"
+		case "pray":
+			return "Prayer"
+		case "mage":
+			return "Magic"
+		case "cook":
+			return "Cooking"
+		case "wc":
+		case "wood cutting":
+			return "Woodcutting"
+		case "fletch":
+			return "Fletching"
+		case "fish":
+			return "Fishing"
+		case "fm":
+			return "Firemaking"
+		case "craft":
+			return "Crafting"
+		case "smith":
+			return "Smithing"
+		case "mining":
+			return "Mining"
+		case "herb":
+			return "Herblore"
+		case "agil":
+			return "Agility"
+		case "thieve":
+			return "Thieving"
+		case "slayer":
+			return "Slayer"
+		case "farm":
+			return "Farming"
+		case "rc":
+			return "Runecraft"
+		case "hunt":
+			return "Hunter"
+		case "con":
+			return "Construction"
+		case "twisted league":
+		case "league":
+		case "tl":
+			return "League points"
+		case "bh hunter":
+		case "hunter bh":
+		case "bh targets":
+		case "targets bh":
+			return "Bounty hunter hunter"
+		case "bh rogue":
+		case "rogue bh":
+			return "Bounty hunter rogue"
+		case "clues all":
+			return "Clue scroll (all)"
+		case "clues beginner":
+			return "Clue scroll (beginner)"
+		case "clues easy":
+			return "Clue scroll (easy)"
+		case "clues medium":
+			return "Clue scroll (medium)"
+		case "clues hard":
+			return "Clue scroll (hard)"
+		case "clues elite":
+			return "Clue scroll (elite)"
+		case "clues master":
+			return "Clue scroll (master)"
+		case "lms":
+			return "Last man standing"
+		case "sire":
+			return "Abyssal Sire"
+		case "hydra":
+			return "Alchemical hydra"
+		case "barrows":
+			return "Barrows chests"
+		case "moss boss":
+			return "Bryophyta"
+		//	return "Callisto"
+		case "cerb":
+			return "Cerberus"
+		case "cox":
+		case "xeric":
+		case "chambers":
+		case "olm":
+		case "raids":
+			return "Chambers of xeric"
+		case "cox cm":
+		case "xeric cm":
+		case "chambers cm":
+		case "olm cm":
+		case "raids cm":
+			return "Chambers of xeric challenge mode"
+		case "elemental":
+		case "ele":
+		case "chaos ele":
+			return "Chaos elemental"
+		case "fanatic":
+			return "Chaos fanatic"
+		case "sara":
+		case "saradomin":
+		case "zilyana":
+		case "zily":
+			return "Commander zilyana"
+		case "corp":
+			return "Corporeal beast"
+		case "crazy arch":
+			return "Crazy archaeologist"
+		case "prime":
+			return "Dagannoth prime"
+		case "rex":
+			return "Dagannoth rex"
+		case "supreme":
+			return "Dagannoth supreme"
+		case "deranged arch":
+			return "Deranged archaeologist"
+		case "bandos":
+		case "graardor":
+			return "General graardor"
+		case "mole":
+			return "Giant mole"
+		case "dusk":
+		case "dawn":
+		case "gargs":
+		case "guardians":
+			return "Grotesque guardians"
+			return "Hespori"
+		case "kq":
+			return "Kalphite queen"
+		case "kbd":
+			return "King black dragon"
+		//	return "Kraken"
+		case "arma":
+		case "kree":
+		case "kreearra":
+		case "armadyl":
+			return "Kree'arra"
+		case "zammy":
+		case "zamorak":
+		case "kril":
+		case "kril trutsaroth":
+			return "K'ril tsutsaroth"
+		//	return "Mimic"
+		case "the nightmare":
+			return "Nightmare"
+		//	return "Obor"
+		//	return "Sarachnis"
+		//	return "Scorpia"
+		//	return "Skotizo"
+		case "the gauntlet":
+			return "Gauntlet"
+		case "the corrupted gauntlet":
+			return "Corrupted gauntlet"
+		case "tob":
+		case "theatre":
+		case "verzik":
+		case "verzik vitur":
+		case "raids 2":
+			return "Theatre of blood"
+		case "thermy":
+			return "Thermonuclear smoke devil"
+		case "zuk":
+		case "inferno":
+			return "Tz-kal-zuk"
+		case "jad":
+		case "tzhaar fight cave":
+			return "Tz-tok-jad"
+		//	return "Venenatis"
+		//	return "Vetion"
+		//	return "Vorkath"
+		case "wt":
+			return "Wintertodt"
+		//	return "Zalcano"
+		case "money snek":
+			return "Zulrah"
+		default:
+			return capitalize(name.toLowerCase().trim())
+	}
+}
+
+function capitalize(string) {
+	if (!string) {
+		return string;
+	}
+
+	if (string.length <= 1) {
+		return string.toUpperCase();
+	}
+
+	return string.substring(0, 1).toUpperCase() + string.substring(1)
+}
+
 module.exports = {
-	categories, 
-	Category
+	categories,
+	Category,
+	getCategoryByShortName
 }

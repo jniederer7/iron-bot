@@ -1,10 +1,10 @@
 const axios = require('axios')
 
-const Endpoints = require('./endpoints')
-const { categories, Category } = require('./categories')
+const { Endpoints, getEndpointByShortName } = require('./endpoints')
+const { categories, Category, getCategoryByShortName } = require('./categories')
 const HiscoreResult = require('./HiscoreResult')
 
-const getPlayer = (username, type = Endpoints.NORMAL) => {
+const getPlayer = (username, type = Endpoints.NORMAL.endpoint) => {
 	return new Promise((resolve, reject) => {
 		if (typeof username !== 'string') {
 			return reject(new Error("Username must be a string"))
@@ -40,6 +40,8 @@ const convertHiscoreResultToDataObject = (username, response) => {
 
 module.exports = {
 	Endpoints,
+	getEndpointByShortName,
 	Category,
+	getCategoryByShortName,
 	getPlayer
 }
