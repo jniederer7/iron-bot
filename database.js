@@ -1,9 +1,21 @@
 const fs = require('fs');
+const p = require('path')
 
 // Stores data in a JSON object and writes to the file on every update
 module.exports = (path) => {
 	path = path || './db.json';
-	const db = fs.existsSync(path) ? JSON.parse(fs.readFileSync(path)) : {};
+	// Create the folder and files if necessary
+	if (!fs.existsSync(path)) {
+		// Ensure directory exists
+		try {
+			fs.mkdirSync(p.dirname(path))
+		} catch (ignored) {
+		}
+		// Write a blank file
+		fs.writeFileSync(path, "{}", null, () => {})
+	}
+
+	const db = JSON.parse(fs.readFileSync(path)) || {};
 
 	const keys = () => Object.keys(db);
 	const values = () => Object.values(db);
