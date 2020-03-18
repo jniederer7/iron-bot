@@ -5,8 +5,7 @@ const commands = require("./commands")
 const hiscoresApi = require('./hiscores/hiscores')
 
 const IRONMAN_HISCORE_ENDPOINT = 'https://secure.runescape.com/m=hiscore_oldschool_ironman/index_lite.ws?player='
-const usersDb = require('./database')(config.databases.users)
-const hiscoresDb = require('./database')(config.databases.hiscores)
+const { usersDb, hiscoresDb } = require('./common');
 
 // Configure logger settings
 logger.remove(logger.transports.Console)
@@ -23,20 +22,26 @@ function updateHiscoreData() {
 	updatingHiscores = true
 
 	const keys = usersDb.keys()
+	if (keys.length <= 0) {
+		updatingHiscores = false
+		return
+	}
 	const keysLoop = (i) => {
 		client.setTimeout(() => {
 			if (i > keys.length) {
 				i = keys.length - 1
 			}
 			
-			const key = keys[i];
+			const key = keys[i]
 			if (!key) {
-				return;
+				updatingHiscores = false
+				return
 			}
 
 			const username = usersDb.get(keys[i])
 			if (!username) {
-				return;
+				updatingHiscores = false
+				return
 			}
 
 			hiscoresApi.getPlayer(username, hiscoresApi.Endpoints.IRONMAN)
@@ -73,7 +78,7 @@ client.on('ready', function (evt) {
 	updateHiscoreData() // Call on startup as the interval will invoke after waiting for the initial delay
 	client.setInterval(updateHiscoreData, 15 * 60 * 100) // Every 15 minutes attempt to update hiscore data if we have stopped checking
 
-	removeDeprecatedUsersHiscoreData();
+	removeDeprecatedUsersHiscoreData()
 	client.setInterval(removeDeprecatedUsersHiscoreData, 60 * 60 * 1000) // Every 60 minutes TODO: Potentially change this delay to be very big, like every 6-24hrs?
 })
 

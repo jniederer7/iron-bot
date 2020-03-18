@@ -1,7 +1,6 @@
 const Discord = require('discord.js')
 const config = require('./config')
-const usersDb = require('./database')(config.databases.users)
-const hiscoresDb = require('./database')(config.databases.hiscores)
+const { usersDb, hiscoresDb } = require('./common');
 const { categories, Category } = require('./hiscores/categories')
 
 // 1-12 characters long, using letters, numbers, spaces, or hyphens
