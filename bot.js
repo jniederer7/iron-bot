@@ -1,6 +1,6 @@
 var Discord = require('discord.js');
 var logger = require('winston');
-var auth = require("./auth.json");
+const config = require("./config");
 var axios = require('axios');
 var createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const fs = require('fs');
@@ -24,7 +24,7 @@ logger.add(new logger.transports.Console, {
 logger.level = 'debug';
 // Initialize Discord Bot
 var bot = new Discord.Client();
-bot.login(auth.token);
+bot.login(config.token);
 bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
