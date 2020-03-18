@@ -57,6 +57,14 @@ function updateHiscoreData() {
 	keysLoop(keys.length - 1)
 }
 
+function removeDeprecatedUsersHiscoreData() {
+	for (const key of hiscoresDb.keys()) {
+		if (!usersDb.get(key)) {
+			hiscoresDb.put(key)
+		}
+	}
+}
+
 // Initialize Discord Bot
 const client = new Discord.Client()
 client.on('ready', function (evt) {
@@ -64,6 +72,9 @@ client.on('ready', function (evt) {
 
 	updateHiscoreData() // Call on startup as the interval will invoke after waiting for the initial delay
 	client.setInterval(updateHiscoreData, 15 * 60 * 100) // Every 15 minutes attempt to update hiscore data if we have stopped checking
+
+	removeDeprecatedUsersHiscoreData();
+	client.setInterval(removeDeprecatedUsersHiscoreData, 60 * 60 * 1000) // Every 60 minutes TODO: Potentially change this delay to be very big, like every 6-24hrs?
 })
 
 client.on('message', message => {
