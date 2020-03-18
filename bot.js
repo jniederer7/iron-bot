@@ -1,8 +1,9 @@
-var Discord = require('discord.js')
-var logger = require('winston')
+const Discord = require('discord.js')
+const logger = require('winston')
 const config = require("./config")
-var axios = require('axios')
-const fs = require('fs')
+const commands = require("./commands")
+
+const IRONMAN_HISCORE_ENDPOINT = 'https://secure.runescape.com/m=hiscore_oldschool_ironman/index_lite.ws?player='
 
 // Configure logger settings
 logger.remove(logger.transports.Console)
@@ -10,74 +11,31 @@ logger.add(new logger.transports.Console, {
     colorize: true
 })
 logger.level = 'debug'
+
 // Initialize Discord Bot
-var bot = new Discord.Client()
-bot.login(config.token)
-bot.on('ready', function (evt) {
-    logger.info('Connected')
-    logger.info('Logged in as: ')
-    logger.info(bot.user.tag + ' - (' + bot.user + ')')
+var client = new Discord.Client()
+client.on('ready', function (evt) {
+	logger.info(`Logged in as: ${client.user.tag} - (${client.user})`)
+	// TODO: Add system to continiously loop over users database and grab data
 })
-bot.on('message', function (user, userID, channelID, message, evt) {
-    // Our bot needs to know if it will execute a command
-    // It will listen for messages that will start with `!`
-    if (message.substring(0, 1) == '$') {
-        var args = message.substring(1).split(' ')
-        var cmd = args[0]
-       var player = args[1]
-        args = args.splice(1)
-        var apiCall = axios.get('https://secure.runescape.com/m=hiscore_oldschool_ironman/index_lite.ws?player=' + player)
 
-        switch(cmd) {
-            case 'hiscore':
-            	apiCall.then(response => {
-            		bot.sendMessage({
-            			to: channelID,
-            			message: response.data.split(/[\s,]+/)
-            		})
-            		
-            	})
-            	break
-            case 'addplayer':
-            	apiCall.then( response => {
-            		var playerData = response.data.split(/[\s,]+/)
-            		 const playerLog = [
-						 {
-						 	totalrank:playerData[0],
-						 	name: player,
-						 	totallvl: playerData[1],
-						 	totalxp:playerData[2],
-						 }
-						 ]
-            		bot.sendMessage({
-            			to:channelID,
-            			message: "Player added"
-            		})
-            	})
+client.on('message', message => {
+	if (message.author.bot) {
+		return
+	}
+	
+	if (!message.content.startsWith(config.prefix)) {
+		return
+	}
 
-            	break
-            case 'clanhighscore':
-            	fs.readFile('players.csv', 'ascii', function(err,data) {
-            		if (err) throw err
-                    output= data.split("\n")
-
-            		 for (var i = 0; i < output.length; i++){
-            			output[i] = output[i].split(",")
-            			}
-                        output.sort((a,b) => a[0] - b[0]) 
-                       for (var j=0; j < output.length; j++){
-                        output[j].split(",")
-                        output[j] = output[j] + "\n" 
-                       }            
-					bot.sendMessage({
-            			to: channelID,
-            			message: output
-            			})
-            	})
-            	
-
-            	break
-
-         }
-     }
+	const args = message.content.slice(config.prefix.length).trim().split(" ")
+	const cmd = args.shift().toLowerCase()
+	logger.debug(`Received cmd: ${cmd} | args: ${args}`)
+	commands(message, cmd, args)
 })
+
+client.on('error', logger.error)
+
+client.login(config.token)
+  .then(token => logger.info(`Successfully logged in with token: ${token}`))
+  .catch(err => logger.error(`Failed to authenticate: ${err}`))
