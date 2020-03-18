@@ -2,8 +2,11 @@ const Discord = require('discord.js')
 const logger = require('winston')
 const config = require("./config")
 const commands = require("./commands")
+const hiscoresApi = require('./hiscores/hiscores')
 
 const IRONMAN_HISCORE_ENDPOINT = 'https://secure.runescape.com/m=hiscore_oldschool_ironman/index_lite.ws?player='
+const usersDb = require('./database')(config.databases.users)
+const hiscoresDb = require('./database')(config.databases.hiscores)
 
 // Configure logger settings
 logger.remove(logger.transports.Console)
@@ -12,11 +15,55 @@ logger.add(new logger.transports.Console, {
 })
 logger.level = 'debug'
 
+let updatingHiscores = false
+function updateHiscoreData() {
+	if (updatingHiscores) {
+		return
+	}
+	updatingHiscores = true
+
+	const keys = usersDb.keys()
+	const keysLoop = (i) => {
+		client.setTimeout(() => {
+			if (i > keys.length) {
+				i = keys.length - 1
+			}
+			
+			const key = keys[i];
+			if (!key) {
+				return;
+			}
+
+			const username = usersDb.get(keys[i])
+			if (!username) {
+				return;
+			}
+
+			hiscoresApi.getPlayer(username, hiscoresApi.Endpoints.IRONMAN)
+				.then(resp => {
+					hiscoresDb.put(keys[i], resp)
+				})
+				.catch(err => console.log(err))
+				// Wait for request to complete or fail to further add to delay
+				.finally(() => {
+					if (--i >= 0) {
+						keysLoop(i)
+					} else {
+						updatingHiscores = false
+					}
+				})
+		}, 10 * 1000)
+	}
+	keysLoop(keys.length - 1)
+}
+
 // Initialize Discord Bot
-var client = new Discord.Client()
+const client = new Discord.Client()
 client.on('ready', function (evt) {
 	logger.info(`Logged in as: ${client.user.tag} - (${client.user})`)
-	// TODO: Add system to continiously loop over users database and grab data
+
+	updateHiscoreData() // Call on startup as the interval will invoke after waiting for the initial delay
+	client.setInterval(updateHiscoreData, 15 * 60 * 100) // Every 15 minutes attempt to update hiscore data if we have stopped checking
 })
 
 client.on('message', message => {
