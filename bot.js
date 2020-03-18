@@ -1,4 +1,4 @@
-var Discord = require('discord.io');
+var Discord = require('discord.js');
 var logger = require('winston');
 var auth = require("./auth.json");
 var axios = require('axios');
@@ -7,10 +7,10 @@ const fs = require('fs');
 const csvWriter = createCsvWriter({
 	path: 'players.csv',
 	header: [
-		{id: 'totalrank', title:" Rank"},
-		{id: 'name', title:" Name"},
-		{id: 'totallvl', title:" Total Lvl"},
-		{id: 'totalxp', title: " Total Xp"}
+		{id: 'totalrank', title:"Rank"},
+		{id: 'name', title:"Name"},
+		{id: 'totallvl', title:"Total Lvl"},
+		{id: 'totalxp', title: "Total Xp"}
 	],
   encoding: 'ascii',
   append: true
@@ -23,14 +23,12 @@ logger.add(new logger.transports.Console, {
 });
 logger.level = 'debug';
 // Initialize Discord Bot
-var bot = new Discord.Client({
-   token: auth.token,
-   autorun: true
-});
+var bot = new Discord.Client();
+bot.login(auth.token);
 bot.on('ready', function (evt) {
     logger.info('Connected');
     logger.info('Logged in as: ');
-    logger.info(bot.username + ' - (' + bot.id + ')');
+    logger.info(bot.user.tag + ' - (' + bot.user + ')');
 });
 bot.on('message', function (user, userID, channelID, message, evt) {
     // Our bot needs to know if it will execute a command
