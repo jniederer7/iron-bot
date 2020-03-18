@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const config = require('./config')
 const usersDb = require('./database')(config.databases.users)
 const hiscoresDb = require('./database')(config.databases.hiscores)
+const { categories, Category } = require('./hiscores/categories')
 
 // 1-12 characters long, using letters, numbers, spaces, or hyphens
 const JAGEX_USERNAME_REGEX = /^[\w\d\s-]{1,12}$/
@@ -74,14 +75,42 @@ module.exports = (message, cmd, args) => {
 				return
 			}
 
-			// TODO: Add the ability to choose a specific category or do all.
-			const hiscoreData = hiscoresDb.values().sort((a, b) => a.rank - b.rank)
-
-			for (let i = 0; i < Math.min(hiscoreData.length, 25); i++) {
-				const element = hiscoreData[i];
-				console.log(element);
+			let category = Category.OVERALL
+			const requestedCategory = args.join(" ").trim();
+			if (requestedCategory) {
+				if (categories.indexOf(requestedCategory) !== -1) {
+					category = requestedCategory
+				} else {
+					return
+				}
 			}
+
+			// TODO: Add the ability to choose a specific category or do all.
+			const hiscoreData = hiscoresDb.values().sort((a, b) => a[category].rank - b[category].rank)
+
+
+			let resultString = ""
+			for (let i = 0; i < Math.min(hiscoreData.length, 25); i++) {
+				const element = hiscoreData[i]
+				const hiscoreResult = element[category]
+				if (element.level === -1) {
+					i = 25
+					continue
+				}
+
+				resultString += `${i + 1}) ${element.username}\t${hiscoreResult.rank}\t${hiscoreResult.level}${hiscoreResult.exp > -1 ? ("\t" + hiscoreResult.exp) : ""}\n`
+			}
+
+			const output = createEmbed()
+				.setTitle(category + " Rankings")
+				.setDescription(resultString)
+				.setTimestamp()
+			message.channel.send(output)
 			return
 		}
 	 }
+}
+
+function createEmbed () {
+	return new Discord.MessageEmbed().setColor(0xec644b)
 }
