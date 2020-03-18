@@ -2,19 +2,7 @@ var Discord = require('discord.js');
 var logger = require('winston');
 const config = require("./config");
 var axios = require('axios');
-var createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const fs = require('fs');
-const csvWriter = createCsvWriter({
-	path: 'players.csv',
-	header: [
-		{id: 'totalrank', title:"Rank"},
-		{id: 'name', title:"Name"},
-		{id: 'totallvl', title:"Total Lvl"},
-		{id: 'totalxp', title: "Total Xp"}
-	],
-  encoding: 'ascii',
-  append: true
-});
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -61,7 +49,6 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 						 	totalxp:playerData[2],
 						 }
 						 ]
-            		csvWriter.writeRecords(playerLog);
             		bot.sendMessage({
             			to:channelID,
             			message: "Player added"
