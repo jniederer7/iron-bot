@@ -3,8 +3,6 @@ const logger = require('winston')
 const config = require("./config")
 const commands = require("./commands")
 const hiscoresApi = require('./hiscores/hiscores')
-
-const IRONMAN_HISCORE_ENDPOINT = 'https://secure.runescape.com/m=hiscore_oldschool_ironman/index_lite.ws?player='
 const { usersDb, hiscoresDb } = require('./common');
 
 // Configure logger settings
@@ -76,7 +74,7 @@ client.on('ready', function (evt) {
 	logger.info(`Logged in as: ${client.user.tag} - (${client.user})`)
 
 	updateHiscoreData() // Call on startup as the interval will invoke after waiting for the initial delay
-	client.setInterval(updateHiscoreData, 15 * 60 * 100) // Every 15 minutes attempt to update hiscore data if we have stopped checking
+	client.setInterval(updateHiscoreData, 15 * 60 * 1000) // Every 15 minutes attempt to update hiscore data if we have stopped checking
 
 	removeDeprecatedUsersHiscoreData()
 	client.setInterval(removeDeprecatedUsersHiscoreData, 60 * 60 * 1000) // Every 60 minutes TODO: Potentially change this delay to be very big, like every 6-24hrs?
