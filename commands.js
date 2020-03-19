@@ -116,7 +116,7 @@ module.exports = (message, cmd, args) => {
 		case 'clanhiscores':
 		case 'clanhighscore':
 		case 'clanhighscores': {
-			if (!hasPermissionsInChannel(message.member, message.channel)) {
+			if (false && !hasPermissionsInChannel(message.member, message.channel)) {
 				message.channel.send(`Sorry ${message.member}, you do not have access to the \`${cmd}\` command`)
 				return
 			}
