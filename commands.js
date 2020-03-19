@@ -3,6 +3,7 @@ const config = require('./config')
 const { usersDb, hiscoresDb } = require('./common');
 const { Category, getCategoryByShortName } = require('./hiscores/categories')
 const { Endpoints, getEndpointByShortName } = require('./hiscores/endpoints')
+const ImageWriter = require('./ImageWriter')
 
 // 1-12 characters long, using letters, numbers, spaces, or hyphens
 // can't start or end with hypen or space, cant have two hyphens/spaces next to each other
@@ -158,19 +159,14 @@ module.exports = (message, cmd, args) => {
 				return
 			}
 
-			let resultString = ""
-			for (let i = 0; i < Math.min(hiscoreData.length, 25); i++) {
-				const element = hiscoreData[i][endpoint]
-				const hiscoreResult = element[category]
-				resultString += `${i + 1}) ${element.username}\t${hiscoreResult.rank}\t${hiscoreResult.level}${hiscoreResult.exp > -1 ? ("\t" + hiscoreResult.exp) : ""}\n`
-			}
+			// Create a hiscore-like imageBuffer
+			const buffer = ImageWriter.generateHiscoreImage(hiscoreData, endpoint, category)
 
-			// TODO: Change this to generate and attach images
 			const output = createEmbed()
-				.setTitle(category + " Rankings")
-				.setDescription(resultString)
 				.setTimestamp()
-			message.channel.send(output)
+				.attachFiles([{name: "image.png", attachment: buffer}])
+				.setImage('attachment://image.png')
+			message.channel.send(output)			
 			return
 		}
 		case "whois": {
