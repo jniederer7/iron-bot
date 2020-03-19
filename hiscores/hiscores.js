@@ -31,7 +31,7 @@ const convertHiscoreResultToDataObject = (username, response) => {
 
 		const skill = categories[i]
 		const result = rows[i].split(",")
-		const data = new HiscoreResult(result[0], result[1], result[3])
+		const data = new HiscoreResult(result[0], result[1], result[2])
 		obj[skill] = data
 	}
 
