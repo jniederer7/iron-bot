@@ -88,7 +88,7 @@ class ImageWriter {
 		outputImage.drawImage(this.middleImage, 0, curHeight, this.middleImage.width, this.middleImage.height)
 		outputImage.font = "bold 20px Arial"
 		outputImage.textAlign = "center"
-		outputImage.fillText("IronScape CC Rankings", centerPoint, curHeight + TOP_PADDING)
+		outputImage.fillText("IronScape Rankings", centerPoint, curHeight + TOP_PADDING)
 		curHeight += this.middleImage.height
 
 		// Add Category text
