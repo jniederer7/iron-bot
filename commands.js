@@ -68,7 +68,7 @@ module.exports = (message, cmd, args) => {
 
 			for (let userKey of usersDb.keys()) {
 				const userObj = usersDb.get(userKey)
-				if (userObj.name === newName) {
+				if (userObj.name.toLowerCase() === newName.toLowerCase()) {
 					message.channel.send(`${message.member} Sorry but the username \`${newName}\` is already taken`)
 					return
 				}
