@@ -171,6 +171,39 @@ module.exports = (message, cmd, args) => {
 			message.channel.send(output)
 			return
 		}
+		case "whois": {
+			if (args == null) {
+				return
+			} 
+
+			const username = args.join(" ").trim()
+			if (username.length == 0) {
+				return
+			}
+
+			if (username.match(JAGEX_USERNAME_REGEX) === null) {
+				message.channel.send(`${message.member} Invalid username: \`${username}\``)
+				return
+			}
+
+			for (let userKey of usersDb.keys()) {
+				const userObj = usersDb.get(userKey)
+				if (userObj.name.toLowerCase() === username.toLowerCase()) {
+					message.client.users.fetch(userKey, true)
+						.then(user => {
+							message.channel.send(`${message.member} The username \`${userObj.name}\` is taken by \`${user.username}#${user.discriminator}\``)
+						})
+						.catch(error => {
+							message.channel.send(`${message.member} Sorry but there was an issue determining who owns that username`)
+						})
+					return
+				}
+			}
+
+			message.channel.send(`${message.member} No-one is currently associated with username \`${username}\``)
+			return
+
+		}
 	 }
 }
 
