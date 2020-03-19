@@ -3,7 +3,7 @@ const logger = require('winston')
 const config = require("./config")
 const commands = require("./commands")
 const hiscoresApi = require('./hiscores/hiscores')
-const { usersDb, hiscoresDb } = require('./common');
+const { usersDb, hiscoresDb } = require('./common')
 
 // Configure logger settings
 logger.remove(logger.transports.Console)
@@ -13,6 +13,7 @@ logger.add(new logger.transports.Console, {
 logger.level = 'debug'
 
 let updatingHiscores = false
+let specialIronmanFlag = false
 function updateHiscoreData() {
 	if (updatingHiscores) {
 		return
@@ -28,31 +29,51 @@ function updateHiscoreData() {
 		client.setTimeout(() => {
 			if (i > keys.length) {
 				i = keys.length - 1
+				specialIronmanFlag = false
 			}
 			
 			const key = keys[i]
 			if (!key) {
 				updatingHiscores = false
+				specialIronmanFlag = false
 				return
 			}
 
-			const username = usersDb.get(keys[i])
-			if (!username) {
+			const user = usersDb.get(keys[i])
+			if (!user) {
 				updatingHiscores = false
+				specialIronmanFlag = false
 				return
 			}
 
-			hiscoresApi.getPlayer(username, hiscoresApi.Endpoints.IRONMAN)
+			// Incase some1 has just set their type we need to continue the loop early.
+			if (!user.name) {
+				specialIronmanFlag = false
+				if (--i >= 0) {
+					keysLoop(i)
+				}
+				return
+			}
+			
+			let endpointObj = specialIronmanFlag ? hiscoresApi.Endpoints.IRONMAN : hiscoresApi.Endpoints[user.endpoint]
+			if (user.endpoint === hiscoresApi.Endpoints.NORMAL.key) {
+				endpointObj = hiscoresApi.Endpoints.NORMAL
+			}
+			hiscoresApi.getPlayer(user.name, endpointObj.endpoint)
 				.then(resp => {
-					hiscoresDb.put(keys[i], resp)
+					const data = hiscoresDb.get(keys[i]) || {}
+					data[endpointObj.key] = resp;
+					hiscoresDb.put(keys[i], data)
+					specialIronmanFlag = !specialIronmanFlag && (user.endpoint === hiscoresApi.Endpoints.HARDCORE_IRONMAN.key || user.endpoint === hiscoresApi.Endpoints.ULTIMATE_IRONMAN.key)
 				})
 				.catch(err => console.log(err))
 				// Wait for request to complete or fail to further add to delay
 				.finally(() => {
-					if (--i >= 0) {
+					if (specialIronmanFlag || (--i >= 0)) {
 						keysLoop(i)
 					} else {
 						updatingHiscores = false
+						specialIronmanFlag = false
 					}
 				})
 		}, 10 * 1000)
@@ -62,8 +83,32 @@ function updateHiscoreData() {
 
 function removeDeprecatedUsersHiscoreData() {
 	for (const key of hiscoresDb.keys()) {
-		if (!usersDb.get(key)) {
+		const user = usersDb.get(key)
+		if (!user) {
 			hiscoresDb.put(key)
+			continue
+		}
+
+		// Check all hiscore results and remove any that do not match the users specified name
+		const data = hiscoresDb.get(key)
+		let change = false
+		for (const endpointKey of Object.keys(data)) {
+			const hiscoreResult = data[endpointKey]
+			const outdatedEndpoint = endpointKey !== user.endpoint
+
+			// Remove the hiscore result if the username doesn't match or its somehow undefined
+			// Remove outdated endpoints. Accounts should keep their IRONMAN endpoint unless they have a normal endpoint
+			if (!hiscoreResult 
+				|| hiscoreResult.username !== user.name
+				|| (outdatedEndpoint && (data.endpoint === hiscoresApi.Endpoints.NORMAL || endpointKey !== hiscoresApi.Endpoints.IRONMAN.key))
+			) {
+				change = true
+				delete data[endpointKey]
+			}
+		}
+
+		if (change) {
+			hiscoresDb.put(key, data)
 		}
 	}
 }
