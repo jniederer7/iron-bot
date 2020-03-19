@@ -66,7 +66,22 @@ function updateHiscoreData() {
 					hiscoresDb.put(keys[i], data)
 					specialIronmanFlag = !specialIronmanFlag && (user.endpoint === hiscoresApi.Endpoints.HARDCORE_IRONMAN.key || user.endpoint === hiscoresApi.Endpoints.ULTIMATE_IRONMAN.key)
 				})
-				.catch(err => console.log(err))
+				.catch(error => {
+					if (!error.response) {
+						logger.debug(`Error receiving response: ${error.message}`)
+						return
+					}
+
+					const status = error.response.status
+					if (status === 404) {
+						logger.debug(`404 error, potentially the wrong account type? Endpoint: ${endpointObj.key} | Name: ${user.name}`)
+					} else if (!error.request) {
+						// Something happened in setting up the request that triggered an Error
+						logger.debug(`Error setting up request ${error.message}`);
+					} else {
+						logger.debug(`Unknown error: ${error.message}`)
+					}
+				})
 				// Wait for request to complete or fail to further add to delay
 				.finally(() => {
 					if (specialIronmanFlag || (--i >= 0)) {
