@@ -5,7 +5,9 @@ const { Category, getCategoryByShortName } = require('./hiscores/categories')
 const { Endpoints, getEndpointByShortName } = require('./hiscores/endpoints')
 
 // 1-12 characters long, using letters, numbers, spaces, or hyphens
-const JAGEX_USERNAME_REGEX = /^[\w\d\s-]{1,12}$/
+// can't start or end with hypen or space, cant have two hyphens/spaces next to each other
+// Modified from https://stackoverflow.com/a/12019115/7108103
+const JAGEX_USERNAME_REGEX = /^(?=.{3,12}$)(?=^[a-zA-Z\d])(?!.*[-]{2})[a-zA-Z\d- ]+$(?<![- ])/
 
 /**
  * Checks if the member can manage messages for this channel
