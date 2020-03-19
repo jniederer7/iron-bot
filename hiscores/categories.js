@@ -194,20 +194,22 @@ getCategoryByShortName = (name) => {
 		case "fish":
 			return "Fishing"
 		case "fm":
+		case"fire":
 			return "Firemaking"
 		case "craft":
 			return "Crafting"
 		case "smith":
 			return "Smithing"
-		case "mining":
+		case "mine":
 			return "Mining"
 		case "herb":
 			return "Herblore"
 		case "agil":
 			return "Agility"
 		case "thieve":
+		case "thief":
 			return "Thieving"
-		case "slayer":
+		case "slay":
 			return "Slayer"
 		case "farm":
 			return "Farming"
@@ -232,16 +234,27 @@ getCategoryByShortName = (name) => {
 		case "clues all":
 			return "Clue scroll (all)"
 		case "clues beginner":
+		case "beginner":
 			return "Clue scroll (beginner)"
 		case "clues easy":
+		case "easy":
 			return "Clue scroll (easy)"
 		case "clues medium":
+		case "medium":
+		case "med":
+		case "meds":
 			return "Clue scroll (medium)"
 		case "clues hard":
+		case "hard":
+		case "hards":
 			return "Clue scroll (hard)"
 		case "clues elite":
+		case "elite":
+		case "elites":
 			return "Clue scroll (elite)"
 		case "clues master":
+		case "master":
+		case "masters":
 			return "Clue scroll (master)"
 		case "lms":
 			return "Last man standing"
@@ -252,9 +265,13 @@ getCategoryByShortName = (name) => {
 		case "barrows":
 			return "Barrows chests"
 		case "moss boss":
+		case "moss giant":
+		case "mossy":
 			return "Bryophyta"
-		//	return "Callisto"
+		case "bear":
+			return "Callisto"
 		case "cerb":
+		case "clifford":
 			return "Cerberus"
 		case "cox":
 		case "xeric":
@@ -301,6 +318,7 @@ getCategoryByShortName = (name) => {
 		case "gargs":
 		case "guardians":
 			return "Grotesque guardians"
+		case "hesp":
 			return "Hespori"
 		case "kq":
 			return "Kalphite queen"
@@ -321,12 +339,20 @@ getCategoryByShortName = (name) => {
 		case "the nightmare":
 			return "Nightmare"
 		//	return "Obor"
-		//	return "Sarachnis"
+		case "sarac":
+		case "sarach":
+			return "Sarachnis"
 		//	return "Scorpia"
-		//	return "Skotizo"
+		case "skot":
+			return "Skotizo"
 		case "the gauntlet":
+		case "guant":
 			return "Gauntlet"
 		case "the corrupted gauntlet":
+		case "corrupt gaunt":
+		case "corrupted gaunt":
+		case "gauntlet corrupted"
+		case " gauntlet corrupt":
 			return "Corrupted gauntlet"
 		case "tob":
 		case "theatre":
@@ -342,12 +368,15 @@ getCategoryByShortName = (name) => {
 		case "jad":
 		case "tzhaar fight cave":
 			return "Tz-tok-jad"
-		//	return "Venenatis"
+		case "vene":
+			return "Venenatis"
 		//	return "Vetion"
-		//	return "Vorkath"
+		case "vork":
+			return "Vorkath"
 		case "wt":
 			return "Wintertodt"
-		//	return "Zalcano"
+		case "zalc":
+			return "Zalcano"
 		case "money snek":
 			return "Zulrah"
 		default:

@@ -18,9 +18,11 @@ getEndpointByShortName = (name) => {
 		case "default":
 			return Endpoints.NORMAL.key
 		case "im":
+		case "iron":
 		case "iron man":
 		case "ironman":
 			return Endpoints.IRONMAN.key
+		case "hc":
 		case "hc im":
 		case "hcim":
 		case "hardcore":
