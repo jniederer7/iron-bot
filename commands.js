@@ -63,6 +63,14 @@ module.exports = (message, cmd, args) => {
 				return
 			}
 
+			for (let userKey of usersDb.keys()) {
+				const userObj = usersDb.get(userKey)
+				if (userObj.name === newName) {
+					message.channel.send(`${message.member} Sorry but the username \`${newName}\` is already taken`)
+					return
+				}
+			}
+
 			const oldName = data.name
 			data.name = newName
 			data.endpoint = data.endpoint || Endpoints.IRONMAN.key
