@@ -73,10 +73,10 @@ client.on('ready', function (evt) {
 
 	// Call methods to run on startup as `setInterval` waits the specified delay before invoking them
 	updateHiscoreData() 
-	client.setInterval(updateHiscoreData, 30 * 1000) // Every 30 seconds attempt to update hiscore data
+	client.setInterval(updateHiscoreData, 12 * 60 * 60 * 1000) // Every 12 hours seconds attempt to update hiscore data
 
 	removeDeprecatedUsersHiscoreData()
-	client.setInterval(removeDeprecatedUsersHiscoreData, 60 * 60 * 1000) // Every 60 minutes TODO: Potentially change this delay to be very big, like every 6-24hrs?
+	client.setInterval(removeDeprecatedUsersHiscoreData, 60 * 60 * 1000) // Every hour
 
 	processTimedQueue() 
 	client.setInterval(processTimedQueue, 10 * 1000) // Every 10 seconds
