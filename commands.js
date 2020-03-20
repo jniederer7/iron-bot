@@ -210,6 +210,11 @@ module.exports = (message, cmd, args) => {
 			return
 
 		}
+		case "users": {
+			const count = usersDb.values().length
+			message.channel.send(`${message.member} There are currently ${count} members using this bot`)
+			return
+		}
 	 }
 }
 
