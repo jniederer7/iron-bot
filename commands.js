@@ -26,7 +26,7 @@ module.exports = (message, cmd, args) => {
 			const result = usersDb.get(message.member.id)
 
 			let output = `${message.member} You have not set a name yet. You can use the \`${config.prefix}setname\` command to do so`;
-			if (result) {
+			if (result && result.name) {
 				const endpointText = result.endpoint === null ? "" : ` (type \`${result.endpoint}\`)`
 				output = `${message.author} Your account is linked to \`${result.name}\`${endpointText}`
 			}
