@@ -351,8 +351,8 @@ getCategoryByShortName = (name) => {
 		case "the corrupted gauntlet":
 		case "corrupt gaunt":
 		case "corrupted gaunt":
-		case "gauntlet corrupted"
-		case " gauntlet corrupt":
+		case "gauntlet corrupted":
+		case "gauntlet corrupt":
 			return "Corrupted gauntlet"
 		case "tob":
 		case "theatre":
@@ -363,6 +363,7 @@ getCategoryByShortName = (name) => {
 		case "thermy":
 			return "Thermonuclear smoke devil"
 		case "zuk":
+		case "where is score":
 		case "inferno":
 			return "Tz-kal-zuk"
 		case "jad":

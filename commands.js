@@ -123,6 +123,9 @@ module.exports = (message, cmd, args) => {
 			message.channel.send(output)
 			return
 		}
+		case 'hiscore':
+		case 'hs':
+		case 'clanhs':
 		case 'clanhiscore':
 		case 'clanhiscores':
 		case 'clanhighscore':
