@@ -213,6 +213,18 @@ module.exports = (message, cmd, args) => {
 			return
 
 		}
+		case "update": {
+			const data = usersDb.get(message.member.id)
+			if (!data || !data.name) {
+				message.channel.send(`${message.member} You have not set a name yet. You can use the \`${config.prefix}setname\` command to do so`)
+				return
+			}
+			
+			// Add to queue of users data to be updated
+			timedQueue.add(message.member.id, false)
+			message.channel.send(`${message.member} You have been added to the update queue`)
+			return
+		}
 		case "users": {
 			const count = usersDb.values().length
 			message.channel.send(`${message.member} There are currently ${count} members using this bot`)
