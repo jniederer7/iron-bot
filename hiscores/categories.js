@@ -232,27 +232,38 @@ getCategoryByShortName = (name) => {
 		case "rogue bh":
 			return "Bounty hunter rogue"
 		case "clues all":
+		case "clues":
 			return "Clue scroll (all)"
 		case "clues beginner":
 		case "beginner":
 			return "Clue scroll (beginner)"
 		case "clues easy":
+		case "easy clue":
+		case "easy clues":
 		case "easy":
 			return "Clue scroll (easy)"
 		case "clues medium":
+		case "medium clue":
+		case "medium clues":
 		case "medium":
 		case "med":
 		case "meds":
 			return "Clue scroll (medium)"
 		case "clues hard":
+		case "hard clue":
+		case "hard clues":
 		case "hard":
 		case "hards":
 			return "Clue scroll (hard)"
 		case "clues elite":
+		case "elite clue":
+		case "elite clues":
 		case "elite":
 		case "elites":
 			return "Clue scroll (elite)"
 		case "clues master":
+		case "master clue":
+		case "master clues":
 		case "master":
 		case "masters":
 			return "Clue scroll (master)"
@@ -324,7 +335,6 @@ getCategoryByShortName = (name) => {
 			return "Kalphite queen"
 		case "kbd":
 			return "King black dragon"
-		//	return "Kraken"
 		case "arma":
 		case "kree":
 		case "kreearra":
@@ -335,18 +345,15 @@ getCategoryByShortName = (name) => {
 		case "kril":
 		case "kril trutsaroth":
 			return "K'ril tsutsaroth"
-		//	return "Mimic"
 		case "the nightmare":
 			return "Nightmare"
-		//	return "Obor"
 		case "sarac":
 		case "sarach":
 			return "Sarachnis"
-		//	return "Scorpia"
 		case "skot":
 			return "Skotizo"
 		case "the gauntlet":
-		case "guant":
+		case "gaunt":
 			return "Gauntlet"
 		case "the corrupted gauntlet":
 		case "corrupt gaunt":
@@ -371,7 +378,8 @@ getCategoryByShortName = (name) => {
 			return "Tz-tok-jad"
 		case "vene":
 			return "Venenatis"
-		//	return "Vetion"
+		case "vet":
+			return "Vetion"
 		case "vork":
 			return "Vorkath"
 		case "wt":
@@ -379,6 +387,9 @@ getCategoryByShortName = (name) => {
 		case "zalc":
 			return "Zalcano"
 		case "money snek":
+		case "profit python":
+		case "cash cobra":
+		case "money mamba":
 			return "Zulrah"
 		default:
 			return capitalize(name.toLowerCase().trim())
