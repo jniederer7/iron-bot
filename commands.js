@@ -68,8 +68,8 @@ module.exports = (message, cmd, args) => {
 			}
 
 			for (let userKey of usersDb.keys()) {
-				const userObj = usersDb.get(userKey)
-				if (userObj.name.toLowerCase() === newName.toLowerCase()) {
+				const userObj = usersDb.get(userKey) || {}
+				if (userObj.name && userObj.name.toLowerCase() === newName.toLowerCase()) {
 					message.channel.send(`${message.member} Sorry but the username \`${newName}\` is already taken`)
 					return
 				}
@@ -193,8 +193,8 @@ module.exports = (message, cmd, args) => {
 			}
 
 			for (let userKey of usersDb.keys()) {
-				const userObj = usersDb.get(userKey)
-				if (userObj.name.toLowerCase() === username.toLowerCase()) {
+				const userObj = usersDb.get(userKey) || {}
+				if (userObj.name && userObj.name.toLowerCase() === username.toLowerCase()) {
 					message.client.users.fetch(userKey, true)
 						.then(user => {
 							message.channel.send(`${message.member} The username \`${userObj.name}\` is taken by \`${user.username}#${user.discriminator}\``)
