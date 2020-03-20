@@ -14,7 +14,7 @@ removeDeprecatedUserData = (userID) => {
 	}
 
 	// Check all hiscore results and remove any that do not match the users specified name
-	const data = hiscoresDb.get(userID)
+	const data = hiscoresDb.get(userID) || {}
 	let change = false
 	for (const endpointKey of Object.keys(data)) {
 		const hiscoreResult = data[endpointKey]
