@@ -144,6 +144,10 @@ client.on('message', message => {
 	if (message.author.bot) {
 		return
 	}
+
+	if (config.channels.length > 0 && config.channels.indexOf(message.channel.name) === -1) {
+		return
+	}
 	
 	if (!message.content.startsWith(config.prefix)) {
 		return
