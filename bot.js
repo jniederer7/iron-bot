@@ -45,8 +45,8 @@ function processTimedQueue() {
 		return
 	}
 
-	const queue = timedQueue.values()
-	if (queue.length <= 0) {
+	const user = timedQueue.getFirst()
+	if (!user) {
 		return
 	}
 	processingQueue = true
@@ -56,7 +56,7 @@ function processTimedQueue() {
 	// We should be attempting to process the queue frequently enough that this should be a non-issue but this can cause additional time
 	// The additional time should be at most double the interval period for a single user
 	// For example a 30second interval would max at 1 additional minute compared to if didn't pre-filter
-	updateUsersHiscoreData(queue, client)
+	updateUsersHiscoreData([user], client)
 		.then(() => {
 			processingQueue = false
 		},
@@ -79,7 +79,7 @@ client.on('ready', function (evt) {
 	client.setInterval(removeDeprecatedUsersHiscoreData, 60 * 60 * 1000) // Every 60 minutes TODO: Potentially change this delay to be very big, like every 6-24hrs?
 
 	processTimedQueue() 
-	client.setInterval(processTimedQueue, 30 * 1000) // Every 30 seconds
+	client.setInterval(processTimedQueue, 10 * 1000) // Every 10 seconds
 })
 
 client.on('message', message => {
