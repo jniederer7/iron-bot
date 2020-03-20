@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const config = require('./config')
-const { usersDb, hiscoresDb, removeDeprecatedUserData } = require('./common');
+const { usersDb, hiscoresDb, removeDeprecatedUserData, timedQueue } = require('./common');
 const { Category, getCategoryByShortName } = require('./hiscores/categories')
 const { Endpoints, getEndpointByShortName } = require('./hiscores/endpoints')
 const ImageWriter = require('./ImageWriter')
@@ -86,7 +86,8 @@ module.exports = (message, cmd, args) => {
 				removeDeprecatedUserData(message.member.id)
 			}
 			message.channel.send(output)
-			// TODO: Add to queue
+			// Add to queue of users data to be updated
+			timedQueue.add(message.member.id)
 			return
 		}
 		case 'settype': {
@@ -123,9 +124,11 @@ module.exports = (message, cmd, args) => {
 
 			if (!data.name) {
 				output += `\nYour account is not currently linked with a name, use the \`${config.prefix}setname\` command to fix this`
+			} else {
+				// Add to queue of users data to be updated
+				timedQueue.add(message.member.id)
 			}
 			message.channel.send(output)
-			// TODO: Add to queue
 			return
 		}
 		case 'hiscore':
