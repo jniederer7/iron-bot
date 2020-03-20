@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const config = require('./config')
-const { usersDb, hiscoresDb } = require('./common');
+const { usersDb, hiscoresDb, removeDeprecatedUserData } = require('./common');
 const { Category, getCategoryByShortName } = require('./hiscores/categories')
 const { Endpoints, getEndpointByShortName } = require('./hiscores/endpoints')
 const ImageWriter = require('./ImageWriter')
@@ -43,6 +43,7 @@ module.exports = (message, cmd, args) => {
 
 			usersDb.put(message.member.id)
 			message.channel.send(`${message.member} Your previous name \`${data.name}\` (type \`${data.endpoint}\`) is no longer associated with you and this bot. You will be removed from the hiscore data within 24hours.`)
+			removeDeprecatedUserData(message.member.id)
 			return
 		}
 		case 'setname': {
@@ -82,8 +83,10 @@ module.exports = (message, cmd, args) => {
 			let output = `${message.member} Your discord account is now linked to the username: \`${newName}\` (type \`${data.endpoint}\`)`
 			if (oldName) {
 				output += `\nYour account was previously linked to the username: \`${oldName}\``
+				removeDeprecatedUserData(message.member.id)
 			}
 			message.channel.send(output)
+			// TODO: Add to queue
 			return
 		}
 		case 'settype': {
@@ -115,12 +118,14 @@ module.exports = (message, cmd, args) => {
 			let output = `${message.member} Your discord account is now linked to the \`${data.endpoint}\` hiscore endpoint`
 			if (oldEndpoint) {
 				output += `\nYour account was previously linked to the \`${oldEndpoint}\` hiscore endpoint`
+				removeDeprecatedUserData(message.member.id)
 			}
 
 			if (!data.name) {
 				output += `\nYour account is not currently linked with a name, use the \`${config.prefix}setname\` command to fix this`
 			}
 			message.channel.send(output)
+			// TODO: Add to queue
 			return
 		}
 		case 'hiscore':
