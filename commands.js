@@ -230,6 +230,28 @@ module.exports = (message, cmd, args) => {
 			message.channel.send(`${message.member} There are currently ${count} members using this bot`)
 			return
 		}
+		case "help": {
+			// TODO: PM this to user instead of printing directly in channel?
+			let output = `This bot tracks OSRS accounts and adds them to a custom clan hiscore list. It will track one RSN per discord account and *will not* update automatically if you name change. Hiscore stats will be updated at a regular interval. `
+			output += `\n- **help** - Displays this message.`
+			output += `\n- **getname** - Prints the RSN associated with your discord ID.`
+			output += `\n- **setname** *RSN* - Adds RSN to hiscore list. One RSN per discord account.`
+			output += `\n   \`setname StonedTurtle\``
+			output += `\n- **deletename** - Deletes RSN from hiscores.`
+			output += `\n- **settype** *type* - Set Iron type (im, hc, ult).`
+			output += `\n   \`settype IM\``
+			output += `\n- **update** - Adds your RSN to the immediate update queue. Happens automatically after setting RSN or Iron type.`
+			output += `\n- **whois** *RSN* - Identifies the discord account for an RSN.`
+			output += `\n   \`whois StonedTurtle\``
+			output += `\n- **hs** *type* [category] - Shows the hiscore list for that specific category (skill or boss). Leave blank for overall`
+			output += `\n   \`hs hc vorkath\``
+
+			message.channel.send(output)
+			return
+		}
+		default: {
+			message.channel.send(`${message.member} I don't know that command. Try \`$help\`.`)
+		}
 	 }
 }
 
