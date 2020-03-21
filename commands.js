@@ -232,19 +232,18 @@ module.exports = (message, cmd, args) => {
 		}
 		case "help": {
 			// TODO: PM this to user instead of printing directly in channel?
-			let output = `This bot tracks OSRS accounts and adds them to a custom clan hiscore list. It will track one RSN per discord account and *will not* update automatically if you name change. Hiscore stats will be updated at a regular interval. `
-			output += `\n- **help** - Displays this message.`
-			output += `\n- **getname** - Prints the RSN associated with your discord ID.`
-			output += `\n- **setname** *RSN* - Adds RSN to hiscore list. One RSN per discord account.`
-			output += `\n   \`setname StonedTurtle\``
-			output += `\n- **deletename** - Deletes RSN from hiscores.`
-			output += `\n- **settype** *type* - Set Iron type (im, hc, ult).`
-			output += `\n   \`settype IM\``
-			output += `\n- **update** - Adds your RSN to the immediate update queue. Happens automatically after setting RSN or Iron type.`
-			output += `\n- **whois** *RSN* - Identifies the discord account for an RSN.`
-			output += `\n   \`whois StonedTurtle\``
-			output += `\n- **hs** *type* [category] - Shows the hiscore list for that specific category (skill or boss). Leave blank for overall`
-			output += `\n   \`hs hc vorkath\``
+			const output = createEmbed()
+				.setTitle('Commands')
+				.setDescription('This bot tracks OSRS accounts and adds them to a custom clan hiscore list. It will track one RSN per discord account and *will not* update automatically if you name change. Hiscore stats will be updated at a regular interval.')
+
+				.addField(`${config.prefix}help`, `Displays this message.`)
+				.addField(`${config.prefix}getname`, `Prints the RSN associated with your discord ID.`)
+				.addField(`${config.prefix}setname <rsn>`, `Adds RSN to hiscore list. One RSN per discord account.`)
+				.addField(`${config.prefix}deletename`, `Deletes RSN from hiscores and disassociates you with the bot.`)
+				.addField(`${config.prefix}settype <type>`, `Set your account type so we query the correct hiscores (im, hc, ult, etc).`)
+				.addField(`${config.prefix}update`, `Adds your RSN to the immediate update queue. Happens automatically after setting RSN or Iron type.`)
+				.addField(`${config.prefix}whois <rsn>`, `Identifies the discord account tied to the specified RSN.`)
+				.addField(`${config.prefix}hs <type> [category]`, `Shows the account type hiscore list for the specific category (skill or boss). Leaving category blank will default to the overall category`)
 
 			message.channel.send(output)
 			return
