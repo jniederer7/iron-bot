@@ -178,7 +178,6 @@ getCategoryByShortName = (name) => {
 		case "hp":
 			return "Hitpoints"
 		case "range":
-		case "ranging":
 			return "Ranged"
 		case "pray":
 			return "Prayer"
@@ -194,11 +193,12 @@ getCategoryByShortName = (name) => {
 		case "fish":
 			return "Fishing"
 		case "fm":
-		case"fire":
+		case "fire":
 			return "Firemaking"
 		case "craft":
 			return "Crafting"
 		case "smith":
+		case "sm":
 			return "Smithing"
 		case "mine":
 			return "Mining"
@@ -210,6 +210,7 @@ getCategoryByShortName = (name) => {
 		case "thief":
 			return "Thieving"
 		case "slay":
+		case "worst skill":
 			return "Slayer"
 		case "farm":
 			return "Farming"
@@ -227,6 +228,7 @@ getCategoryByShortName = (name) => {
 		case "hunter bh":
 		case "bh targets":
 		case "targets bh":
+		case "bh":
 			return "Bounty hunter hunter"
 		case "bh rogue":
 		case "rogue bh":
@@ -278,7 +280,10 @@ getCategoryByShortName = (name) => {
 		case "moss boss":
 		case "moss giant":
 		case "mossy":
+		case "bryo":
 			return "Bryophyta"
+		case "hill giant":
+			return "Obor"
 		case "bear":
 			return "Callisto"
 		case "cerb":
@@ -318,6 +323,7 @@ getCategoryByShortName = (name) => {
 		case "supreme":
 			return "Dagannoth supreme"
 		case "deranged arch":
+		case "deranged":
 			return "Deranged archaeologist"
 		case "bandos":
 		case "graardor":
