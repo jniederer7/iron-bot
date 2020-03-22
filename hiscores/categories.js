@@ -276,6 +276,7 @@ getCategoryByShortName = (name) => {
 		case "hydra":
 			return "Alchemical hydra"
 		case "barrows":
+		case "noob trap":
 			return "Barrows chests"
 		case "moss boss":
 		case "moss giant":
@@ -300,6 +301,7 @@ getCategoryByShortName = (name) => {
 		case "chambers cm":
 		case "olm cm":
 		case "raids cm":
+		case "cm":
 			return "Chambers of xeric challenge mode"
 		case "elemental":
 		case "ele":
@@ -315,6 +317,7 @@ getCategoryByShortName = (name) => {
 		case "corp":
 			return "Corporeal beast"
 		case "crazy arch":
+		case "bellock":
 			return "Crazy archaeologist"
 		case "prime":
 			return "Dagannoth prime"
@@ -336,6 +339,7 @@ getCategoryByShortName = (name) => {
 		case "guardians":
 			return "Grotesque guardians"
 		case "hesp":
+		case "bank":
 			return "Hespori"
 		case "kq":
 			return "Kalphite queen"
@@ -381,6 +385,7 @@ getCategoryByShortName = (name) => {
 			return "Tz-kal-zuk"
 		case "jad":
 		case "tzhaar fight cave":
+		case "fire cape":
 			return "Tz-tok-jad"
 		case "vene":
 			return "Venenatis"
