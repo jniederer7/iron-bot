@@ -1,15 +1,7 @@
 const Discord = require('discord.js')
-const logger = require('winston')
 const config = require("./config")
 const commands = require("./commands")
-const { usersDb, hiscoresDb, removeDeprecatedUserData, updateUsersHiscoreData, timedQueue } = require('./common')
-
-// Configure logger settings
-logger.remove(logger.transports.Console)
-logger.add(new logger.transports.Console, {
-    colorize: true
-})
-logger.level = 'debug'
+const { usersDb, hiscoresDb, removeDeprecatedUserData, updateUsersHiscoreData, timedQueue, logger } = require('./common')
 
 let updatingHiscores = false
 function updateHiscoreData() {

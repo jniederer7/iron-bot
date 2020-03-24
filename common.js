@@ -1,9 +1,17 @@
+const logger = require('winston')
 const config = require('./config')
 const usersDb = require('./database')(config.databases.users)
 const hiscoresDb = require('./database')(config.databases.hiscores)
 const hiscoresApi = require('./hiscores/hiscores')
 const TimedQueue = require('./TimedQueue')
 const timedQueue = new TimedQueue()
+
+// Configure logger settings
+logger.remove(logger.transports.Console)
+logger.add(new logger.transports.Console, {
+    colorize: true
+})
+logger.level = 'debug'
 
 removeDeprecatedUserData = (userID) => {
 	// If they deleted themselves remove their hiscore data
@@ -122,5 +130,6 @@ module.exports = {
 	hiscoresDb,
 	removeDeprecatedUserData,
 	updateUsersHiscoreData,
-	timedQueue
+	timedQueue,
+	logger
 }
