@@ -8,7 +8,7 @@ const ImageWriter = require('./ImageWriter')
 // 1-12 characters long, using letters, numbers, spaces, or hyphens
 // can't start or end with hypen or space, cant have two hyphens/spaces next to each other
 // Modified from https://stackoverflow.com/a/12019115/7108103
-const JAGEX_USERNAME_REGEX = /^(?=.{3,12}$)(?=^[a-zA-Z\d])(?!.*[-]{2})[a-zA-Z\d- ]+$(?<![- ])/
+const JAGEX_USERNAME_REGEX = /^(?=.{1,12}$)(?=^[a-zA-Z\d])(?!.*[-]{2})[a-zA-Z\d- ]+$(?<![- ])/
 
 /**
  * Checks if the member can manage messages for this channel
@@ -80,7 +80,7 @@ module.exports = (message, cmd, args) => {
 			data.endpoint = data.endpoint || Endpoints.IRONMAN.key
 			usersDb.put(message.member.id, data)
 
-			let output = `${message.member} Your discord account is now linked to the username: \`${newName}\` (type \`${data.endpoint}\`)`
+			let output = `${message.member} Your discord account is now linked to the username: \`${newName}\` (account type \`${data.endpoint}\`)`
 			if (oldName) {
 				output += `\nYour account was previously linked to the username: \`${oldName}\``
 				removeDeprecatedUserData(message.member.id)
@@ -250,6 +250,7 @@ module.exports = (message, cmd, args) => {
 		}
 		default: {
 			message.channel.send(`${message.member} I don't know that command. Try \`$help\`.`)
+			return
 		}
 	 }
 }

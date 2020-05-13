@@ -64,7 +64,7 @@ client.on('ready', function (evt) {
 	logger.info(`Logged in as: ${client.user.tag} - (${client.user})`)
 
 	// Call methods to run on startup as `setInterval` waits the specified delay before invoking them
-	updateHiscoreData() 
+	// updateHiscoreData() 
 	client.setInterval(updateHiscoreData, 12 * 60 * 60 * 1000) // Every 12 hours seconds attempt to update hiscore data
 
 	removeDeprecatedUsersHiscoreData()
