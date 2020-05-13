@@ -98,3 +98,17 @@ client.on('error', logger.error)
 client.login(config.token)
   .then(token => logger.info(`Successfully logged in with token: ${token}`))
   .catch(err => logger.error(`Failed to authenticate: ${err}`))
+
+client.on("guildMemberAdd", member => {
+	let memberRole = member.guild.roles.cache.find(role => role.id == "709430828656230541")
+	//Check to see if new member account is 7+ days old, then give a role if it is.
+	if(Date.now() - member.user.createdAt > 1000 * 60 * 60 * 24 * 7) {
+		member.roles.add(memberRole);
+		console.log("Role added");
+	}
+	else {
+		//Send new members a dm for additional verification
+		member.send("Hi! Thank you for joining Ironscape. As your account is new, please send a friend request to a mod of our server to contact them for additional verification to get access to this server.")
+		console.log("Message sent");
+	}
+})
