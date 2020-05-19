@@ -108,7 +108,7 @@ client.on("guildMemberAdd", member => {
 	}
 	else {
 		//Send new members a dm for additional verification
-		member.send("Hi! Thank you for joining Ironscape. As your account is new, please send a friend request to a mod of our server to contact them for additional verification to get access to this server.")
+		member.send("Hi! Thank you for joining IronScape. Unfortunately, your account has been flagged as suspicious and we'll need additional verification to grant you access to the server. You can either send a friend request to our Moderators to discuss this or verify your phone in your discord account settings. We apologise for any inconvenience this may cause you.")
 		console.log("Message sent");
 	}
 })
