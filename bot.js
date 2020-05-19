@@ -2,6 +2,17 @@ const Discord = require('discord.js')
 const config = require("./config")
 const commands = require("./commands")
 const { usersDb, hiscoresDb, removeDeprecatedUserData, updateUsersHiscoreData, timedQueue, logger } = require('./common')
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 8080;
+
+app.get('/', function(req, res) {
+	res.render('index');
+})
+
+app.listen(port, () => {
+	console.log("Iron Bot is online!")
+})
 
 let updatingHiscores = false
 function updateHiscoreData() {
