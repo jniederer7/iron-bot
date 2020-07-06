@@ -2,17 +2,17 @@ const Discord = require('discord.js')
 const config = require("./config")
 const commands = require("./commands")
 const { usersDb, hiscoresDb, removeDeprecatedUserData, updateUsersHiscoreData, timedQueue, logger } = require('./common')
-var express = require('express');
-var app = express();
-var port = process.env.PORT || 8080;
+// var express = require('express');
+// var app = express();
+// var port = process.env.PORT || 8080;
 
-app.get('/', function(req, res) {
-	res.render('index');
-})
+// app.get('/', function(req, res) {
+// 	res.render('index');
+// })
 
-app.listen(port, () => {
-	console.log("Iron Bot is online!")
-})
+// app.listen(port, () => {
+// 	console.log("Iron Bot is online!")
+// })
 
 let updatingHiscores = false
 function updateHiscoreData() {
@@ -102,6 +102,10 @@ client.on('message', message => {
 	const cmd = args.shift().toLowerCase()
 	logger.debug(`Received cmd: ${cmd} | args: ${args}`)
 	commands(message, cmd, args)
+
+	if (message.content.startsWith("$accept") || message.content.startsWith("$deny")){
+		message.delete({timeout: 30 * 1000});
+	}
 })
 
 client.on('error', logger.error)
