@@ -4,8 +4,8 @@
         "endpoint": "IRONMAN"
     },
     "419471076976885760": {
-        "name": "Reimagined",
-        "endpoint": "ULTIMATE_IRONMAN"
+        "name": "lucidmeercat",
+        "endpoint": "IRONMAN"
     },
     "579421971725680679": {
         "name": "m8tt",
@@ -108,7 +108,7 @@
         "endpoint": "HARDCORE_IRONMAN"
     },
     "136866419253051393": {
-        "name": "jhinital",
+        "name": "jhint",
         "endpoint": "IRONMAN"
     },
     "316686972599140352": {
@@ -280,7 +280,7 @@
         "endpoint": "IRONMAN"
     },
     "244213964538380299": {
-        "name": "memefrog btw",
+        "name": "the frog btw",
         "endpoint": "IRONMAN"
     },
     "142402429466443776": {
@@ -488,7 +488,7 @@
         "endpoint": "IRONMAN"
     },
     "95785363980685312": {
-        "name": "bayes rule",
+        "name": "lynx titan",
         "endpoint": "IRONMAN"
     },
     "198354416967876608": {
@@ -712,7 +712,7 @@
         "endpoint": "IRONMAN"
     },
     "212388813622870016": {
-        "name": "SAMERlNO",
+        "name": "OnlySams",
         "endpoint": "HARDCORE_IRONMAN"
     },
     "191260194162868225": {
@@ -1012,7 +1012,7 @@
         "endpoint": "IRONMAN"
     },
     "171082745752059904": {
-        "name": "harveys",
+        "name": "srern",
         "endpoint": "IRONMAN"
     },
     "246519806348623872": {
@@ -1052,7 +1052,7 @@
         "endpoint": "IRONMAN"
     },
     "180398004128317440": {
-        "name": "Sue Lynder",
+        "name": "Spoon Lynder",
         "endpoint": "IRONMAN"
     },
     "405142562475868170": {
@@ -1073,10 +1073,6 @@
     },
     "322861055720161280": {
         "name": "Stayn Aliive",
-        "endpoint": "IRONMAN"
-    },
-    "603259907206283265": {
-        "name": "Poll",
         "endpoint": "IRONMAN"
     },
     "179310045312450560": {
@@ -1101,6 +1097,78 @@
     },
     "347531422065754112": {
         "name": "RonaldReagan",
+        "endpoint": "IRONMAN"
+    },
+    "305766373584273410": {
+        "name": "GZA",
+        "endpoint": "IRONMAN"
+    },
+    "359762283100110850": {
+        "name": "potato affi",
+        "endpoint": "IRONMAN"
+    },
+    "117836378074513415": {
+        "name": "Hawkinjs",
+        "endpoint": "ULTIMATE_IRONMAN"
+    },
+    "731090651223031838": {
+        "name": "bayes rule",
+        "endpoint": "IRONMAN"
+    },
+    "419638159140454400": {
+        "name": "Grlndlng",
+        "endpoint": "IRONMAN"
+    },
+    "547385954051162112": {
+        "name": "General Mac",
+        "endpoint": "IRONMAN"
+    },
+    "703826286140850236": {
+        "name": "F athletes",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "541995841670479913": {
+        "name": "Giowani",
+        "endpoint": "IRONMAN"
+    },
+    "174558262463561728": {
+        "name": "neyes",
+        "endpoint": "IRONMAN"
+    },
+    "145871700699906048": {
+        "name": "SoloWanna",
+        "endpoint": "IRONMAN"
+    },
+    "603259907206283265": {
+        "name": "Poll",
+        "endpoint": "IRONMAN"
+    },
+    "318943792096870402": {
+        "name": "economist",
+        "endpoint": "IRONMAN"
+    },
+    "166301290559832065": {
+        "name": "R em",
+        "endpoint": "IRONMAN"
+    },
+    "358844082417565710": {
+        "name": "Hayasaka Ai",
+        "endpoint": "IRONMAN"
+    },
+    "232017035540824064": {
+        "name": "Brah 2",
+        "endpoint": "IRONMAN"
+    },
+    "205703178237247488": {
+        "name": "awful spoon",
+        "endpoint": "IRONMAN"
+    },
+    "323830175114461185": {
+        "name": "Casoul",
+        "endpoint": "IRONMAN"
+    },
+    "250098007826104320": {
+        "name": "Fox Dergen",
         "endpoint": "IRONMAN"
     }
 }
