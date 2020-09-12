@@ -283,7 +283,7 @@ module.exports = (message, cmd, args) => {
 				message.channel.send("Incorrect Discord ID");
 				return
 			}
-			if (ccEndPoint == "hardcore" || ccEndPoint == "overflow" || ccEndPoint == "ultimate" || ccEndPoint == "total"){
+			if (ccEndPoint == "hardcore" || ccEndPoint == "ultimate"){
 			user.send(`Hello! Your application to ${capitalizeFirstLetter(ccEndPoint)} CC has been accepted and you will be ranked in game within 48 hours. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
 			
 This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
@@ -301,6 +301,44 @@ Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
 			});;
 			return
 			}
+
+			if (ccEndPoint == "overflow") {
+				user.send(`Hello! Your application to IronmanCC has been accepted and you will be ranked in game within 48 hours. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
+			
+This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
+			.then( () => {
+				message.channel.send(`IronmanCC application accepted for:
+RSN: ${userRSN}
+Discord: <@${userEndPoint}>`);
+			}).catch( (e) => {
+				message.channel.send(`IronmanCC application accepted for:
+RSN: ${userRSN}
+Discord: <@${userEndPoint}>
+Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
+
+				return;
+			});;
+			return
+			};
+
+			if (ccEndPoint == "total") {
+				user.send(`Hello! Your application to IronmanCC2k has been accepted and you will be ranked in game within 48 hours. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
+			
+This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
+			.then( () => {
+				message.channel.send(`IronmanCC2k application accepted for:
+RSN: ${userRSN}
+Discord: <@${userEndPoint}>`);
+			}).catch( (e) => {
+				message.channel.send(`IronmanCC2k application accepted for:
+RSN: ${userRSN}
+Discord: <@${userEndPoint}>
+Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
+
+				return;
+			});;
+			return
+			};
 
 			if (ccEndPoint == "ironscape"){
 
@@ -362,18 +400,18 @@ Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
 				message.channel.send("Incorrect Discord ID");
 				return
 			}
-			if (ccEndPoint == "hardcore" || ccEndPoint == "overflow" || ccEndPoint == "ultimate" || ccEndPoint == "total"){
+			if (ccEndPoint == "hardcore" || ccEndPoint == "ultimate"){
 			user.send(`Hello, unfortunately your application to ${capitalizeFirstLetter(ccEndPoint)} CC has been denied.
 
 Note from Leadership: \`${reason}\`
 
 This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
 			.then( () => {
-				message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} CC application Denied for:
+				message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} CC application denied for:
 Discord: <@${userEndPoint}>
 Reason: ${reason}`);
 							}).catch( (e) => {
-			message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} CC application accepted for:
+			message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} CC application denied for:
 Discord: <@${userEndPoint}>
 Reason: ${reason}
 Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
@@ -381,6 +419,46 @@ Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
 			});
 			return
 			}
+
+			if( ccEndPoint == "overflow"){
+				user.send(`Hello, unfortunately your application to IronmanCC has been denied.
+
+Note from Leadership: \`${reason}\`
+
+This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
+			.then( () => {
+				message.channel.send(`IronmanCC application Denied for:
+Discord: <@${userEndPoint}>
+Reason: ${reason}`);
+							}).catch( (e) => {
+			message.channel.send(`IronmanCC application denied for:
+Discord: <@${userEndPoint}>
+Reason: ${reason}
+Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
+				return;
+			});
+			return
+			};
+
+			if( ccEndPoint == "total"){
+				user.send(`Hello, unfortunately your application to IronmanCC2k has been denied.
+
+Note from Leadership: \`${reason}\`
+
+This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
+			.then( () => {
+				message.channel.send(`IronmanCC2k application Denied for:
+Discord: <@${userEndPoint}>
+Reason: ${reason}`);
+							}).catch( (e) => {
+			message.channel.send(`IronmanCC2k application denied for:
+Discord: <@${userEndPoint}>
+Reason: ${reason}
+Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
+				return;
+			});
+			return
+			};
 
 			if (ccEndPoint == "ironscape"){
 			user.send(`Hello unfortunately your application to ${capitalizeFirstLetter(ccEndPoint)} FC has been denied.
