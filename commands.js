@@ -4,7 +4,8 @@ const { usersDb, hiscoresDb, removeDeprecatedUserData, timedQueue } = require('.
 const { Category, getCategoryByShortName } = require('./hiscores/categories')
 const { Endpoints, getEndpointByShortName } = require('./hiscores/endpoints')
 const ImageWriter = require('./ImageWriter')
-const {bossCategoryAliases, bossCategories } = require('./pb/bossCategories.js')
+const {bossCategoryAliases, bossCategories } = require('./pb/bossCategories.js');
+const pbFunctions = require('./pb/pbCommands.js');
 
 // 1-12 characters long, using letters, numbers, spaces, or hyphens
 // can't start or end with hypen or space, cant have two hyphens/spaces next to each other
@@ -27,11 +28,11 @@ const JAGEX_USERNAME_REGEX = /^(?=.{1,12}$)(?=^[a-zA-Z\d])(?!.*[-]{2})[a-zA-Z\d-
 	 database: "boss_pbs",
 	 multipleStatements: true
    });
-   
-   con.connect(function(err) {
-	 if (err) throw err;
-	 console.log("Connected!");
-   });
+
+const startConnection = () => {
+	con.connect(function(err) {
+	if (err) throw err;
+  })};
 
 function hasPermissionsInChannel(member, channel) {
 	return member && member.permissionsIn(channel).has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)
@@ -270,87 +271,7 @@ module.exports = (message, cmd, args) => {
 			return
 		}
 		case 'pb':{
-			let output = '';
-			if(args[0]== undefined || args[0] == ''){
-				output = 'Missing boss'
-				message.channel.send(output)
-				return
-			}
-
-			let requestBoss = args[0];
-			const boss = bossCategoryAliases(requestBoss);
-	
-			let validBoss = false
-			for(let i = 0; i < bossCategories.length; i++){
-				if (bossCategories[i] == boss){
-					validBoss = true;
-					break
-				}
-			}
-			if (validBoss == false){
-				output = 'invalid boss selected'
-				message.channel.send(output)
-				return
-			}
-			let query = `SELECT * FROM boss_kills WHERE boss = "${boss}" ORDER BY kill_time`
-			con.query(query, (err,res) =>{
-				if (err) throw err
-				let maxCount = 10;
-				output = createEmbed()
-				.setTitle(`${boss} Personal Bests`)
-				.setDescription(`Kill Time is H:MM:SS.s `)
-
-					let rankValue = `:first_place:\n:second_place:\n:third_place:\n:four: \n:five:\n:six:\n:seven:\n:eight:\n:nine:\n :keycap_ten: `
-					let playerName = ``
-					let killTime =``
-					for (let i = 0; i < maxCount; i++){
-						if(res[0] == undefined){
-							output = 'No results yet for that boss!'
-							message.channel.send(output)
-							return
-						}
-						if (res[i] == undefined){
-							break
-						}
-						// if (i > 2 ){
-						// 	rankValue += `${i+1}\n`
-						// 	}
-						playerName += `${res[i].player_name}\n`
-						killTime += `${res[i].kill_time}\n`
-					}
-						output = output.addFields(
-							{name: `Rank`, value: `${rankValue}`, inline: true},
-							{name: `Player Name`, value: `${playerName}`, inline: true},
-							{name: `Kill Time`, value: `${killTime}`, inline: true},
-							)
-					
-					rankValue = `:first_place:\n:second_place:\n:third_place:\n:four: \n:five:\n:six:\n:seven:\n:eight:\n:nine:\n :keycap_ten: `
-					let pbValue = ``
-					let imageValue = ``
-					for (let j = 0; j < maxCount; j++){
-						if (res[j] == undefined){
-							break
-						}
-						//  if (j > 2 ){
-						// rankValue += `${j+1}\n`
-						// }
-						pbValue += `${res[j].pb_date}\n`
-						imageValue += `[Link](${res[j].image_link})\n`
-
-					}
-						output = output.addFields(
-							{name: `Rank`, value: `${rankValue}`, inline: true},
-							{name: 'Date', value: `${pbValue}`, inline: true},
-							{name: 'Image Link', value: `${imageValue}`, inline: true},
-						)
-
-					
-					message.channel.send(output)
-			})
-			con.end( (err) => {
-				if (err) throw err
-			})
-			return
+			pbFunctions.pb()
 
 		}
 
