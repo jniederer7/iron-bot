@@ -34,6 +34,7 @@ const categories = [
 	"Clue scroll (elite)",
 	"Clue scroll (master)",
 	"Last man standing",
+	"Soul wars zeal",
 	"Abyssal Sire",
 	"Alchemical hydra",
 	"Barrows chests",
@@ -66,6 +67,7 @@ const categories = [
 	"Sarachnis",
 	"Scorpia",
 	"Skotizo",
+	"Tempoross",
 	"Gauntlet",
 	"Corrupted gauntlet",
 	"Theatre of blood",
@@ -116,50 +118,52 @@ const Category = {
 	CLUE_SCROLL_ELITE: categories[32],
 	CLUE_SCROLL_MASTER: categories[33],
 	LAST_MAN_STANDING: categories[34],
-	ABYSSAL_SIRE: categories[35],
-	ALCHEMICAL_HYDRA: categories[36],
-	BARROWS_CHESTS: categories[37],
-	BRYOPHYTA: categories[38],
-	CALLISTO: categories[39],
-	CERBERUS: categories[40],
-	CHAMBERS_OF_XERIC: categories[41],
-	CHAMBERS_OF_XERIC_CHALLENGE_MODE: categories[42],
-	CHAOS_ELEMENTAL: categories[43],
-	CHAOS_FANATIC: categories[44],
-	COMMANDER_ZILYANA: categories[45],
-	CORPOREAL_BEAST: categories[46],
-	CRAZY_ARCHAEOLOGIST: categories[47],
-	DAGANNOTH_PRIME: categories[48],
-	DAGANNOTH_REX: categories[49],
-	DAGANNOTH_SUPREME: categories[50],
-	DERANGED_ARCHAEOLOGIST: categories[51],
-	GENERAL_GRAARDOR: categories[52],
-	GIANT_MOLE: categories[53],
-	GROTESQUE_GUARDIANS: categories[54],
-	HESPORI: categories[55],
-	KALPHITE_QUEEN: categories[56],
-	KING_BLACK_DRAGON: categories[57],
-	KRAKEN: categories[58],
-	KREEARRA: categories[59],
-	KRIL_TSUTSAROTH: categories[60],
-	MIMIC: categories[61],
-	NIGHTMARE: categories[62],
-	OBOR: categories[63],
-	SARACHNIS: categories[64],
-	SCORPIA: categories[65],
-	SKOTIZO: categories[66],
-	GAUNTLET: categories[67],
-	CORRUPTED_GAUNTLET: categories[68],
-	THEATRE_OF_BLOOD: categories[69],
-	THERMONUCLEAR_SMOKE_DEVIL: categories[70],
-	TZ_KAL_ZUK: categories[71],
-	TZ_TOK_JAD: categories[72],
-	VENENATIS: categories[73],
-	VETION: categories[74],
-	VORKATH: categories[75],
-	WINTERTODT: categories[76],
-	ZALCANO: categories[77],
-	ZULRAH: categories[78],
+	SOUL_WARS_ZEAL: categories[35],
+	ABYSSAL_SIRE: categories[36],
+	ALCHEMICAL_HYDRA: categories[37],
+	BARROWS_CHESTS: categories[38],
+	BRYOPHYTA: categories[39],
+	CALLISTO: categories[40],
+	CERBERUS: categories[41],
+	CHAMBERS_OF_XERIC: categories[42],
+	CHAMBERS_OF_XERIC_CHALLENGE_MODE: categories[43],
+	CHAOS_ELEMENTAL: categories[44],
+	CHAOS_FANATIC: categories[45],
+	COMMANDER_ZILYANA: categories[46],
+	CORPOREAL_BEAST: categories[47],
+	CRAZY_ARCHAEOLOGIST: categories[48],
+	DAGANNOTH_PRIME: categories[49],
+	DAGANNOTH_REX: categories[45],
+	DAGANNOTH_SUPREME: categories[51],
+	DERANGED_ARCHAEOLOGIST: categories[52],
+	GENERAL_GRAARDOR: categories[53],
+	GIANT_MOLE: categories[54],
+	GROTESQUE_GUARDIANS: categories[55],
+	HESPORI: categories[56],
+	KALPHITE_QUEEN: categories[57],
+	KING_BLACK_DRAGON: categories[58],
+	KRAKEN: categories[59],
+	KREEARRA: categories[60],
+	KRIL_TSUTSAROTH: categories[61],
+	MIMIC: categories[62],
+	NIGHTMARE: categories[63],
+	OBOR: categories[64],
+	SARACHNIS: categories[65],
+	SCORPIA: categories[66],
+	SKOTIZO: categories[67],
+	TEMPOROSS: categories[68],
+	GAUNTLET: categories[69],
+	CORRUPTED_GAUNTLET: categories[70],
+	THEATRE_OF_BLOOD: categories[71],
+	THERMONUCLEAR_SMOKE_DEVIL: categories[72],
+	TZ_KAL_ZUK: categories[73],
+	TZ_TOK_JAD: categories[74],
+	VENENATIS: categories[75],
+	VETION: categories[76],
+	VORKATH: categories[77],
+	WINTERTODT: categories[78],
+	ZALCANO: categories[79],
+	ZULRAH: categories[80],
 }
 
 getCategoryByShortName = (name) => {
@@ -273,6 +277,9 @@ getCategoryByShortName = (name) => {
 			return "Last man standing"
 		case "sire":
 			return "Abyssal Sire"
+		case "sw":
+		case "soul":
+				return "Soul wars zeal"
 		case "hydra":
 			return "Alchemical hydra"
 		case "barrows":
@@ -337,6 +344,8 @@ getCategoryByShortName = (name) => {
 		case "dawn":
 		case "gargs":
 		case "guardians":
+		case "gg":
+		case "ggs":
 			return "Grotesque guardians"
 		case "hesp":
 		case "bank":
@@ -356,12 +365,17 @@ getCategoryByShortName = (name) => {
 		case "kril trutsaroth":
 			return "K'ril tsutsaroth"
 		case "the nightmare":
+		case "nm":
 			return "Nightmare"
 		case "sarac":
 		case "sarach":
 			return "Sarachnis"
 		case "skot":
 			return "Skotizo"
+		case "temp":
+		case "fishingtodt":
+		case "summertodt":
+			return "Tempoross"
 		case "the gauntlet":
 		case "gaunt":
 			return "Gauntlet"
@@ -380,7 +394,6 @@ getCategoryByShortName = (name) => {
 		case "thermy":
 			return "Thermonuclear smoke devil"
 		case "zuk":
-		case "where is score":
 		case "inferno":
 			return "Tz-kal-zuk"
 		case "jad":

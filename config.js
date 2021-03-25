@@ -6,7 +6,7 @@ module.exports = {
 	prefix: "$",
 	databases: {
 		users: './data/users.json',
-		hiscores: './data/hiscore-data.json'
+		hiscores: './data/hiscore-data.json',
 	},
 	channels: ['clan-hiscores', 'general', 'app-log'],
 }

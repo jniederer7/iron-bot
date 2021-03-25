@@ -4,6 +4,7 @@ const { usersDb, hiscoresDb, removeDeprecatedUserData, timedQueue } = require('.
 const { Category, getCategoryByShortName } = require('./hiscores/categories')
 const { Endpoints, getEndpointByShortName } = require('./hiscores/endpoints')
 const ImageWriter = require('./ImageWriter')
+const {bossCategoryAliases, bossCategories } = require('./pb/bossCategories.js')
 
 // 1-12 characters long, using letters, numbers, spaces, or hyphens
 // can't start or end with hypen or space, cant have two hyphens/spaces next to each other
@@ -16,6 +17,22 @@ const JAGEX_USERNAME_REGEX = /^(?=.{1,12}$)(?=^[a-zA-Z\d])(?!.*[-]{2})[a-zA-Z\d-
  * @param channel the channel object from message.channel, if null checks globablly
  * @returns boolean
  */
+
+ const mysql = require('mysql')
+
+ const con = mysql.createConnection({
+	 host: "localhost",
+	 user: "root",
+	 password: "",
+	 database: "boss_pbs",
+	 multipleStatements: true
+   });
+   
+   con.connect(function(err) {
+	 if (err) throw err;
+	 console.log("Connected!");
+   });
+
 function hasPermissionsInChannel(member, channel) {
 	return member && member.permissionsIn(channel).has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)
 }
@@ -244,11 +261,250 @@ module.exports = (message, cmd, args) => {
 				.addField(`${config.prefix}update`, `Adds your RSN to the immediate update queue. Happens automatically after setting RSN or Iron type.`)
 				.addField(`${config.prefix}whois <rsn>`, `Identifies the discord account tied to the specified RSN.`)
 				.addField(`${config.prefix}hs <type> [category]`, `Shows the account type hiscore list for the specific category (skill or boss). Leaving category blank will default to the overall category`)
+				.addField(`${config.prefix}pb <boss>`, `Displays a list the fastest boss kill times by IronScape members`)
+				.addField(`${config.prefix}mypbs`, `displays a list of all the pb's you have tracked with the bot and overall ranks in the clan`)
+				.addField(`${config.prefix}addpb <boss> <kill time> <link> <nickname>`, `adds a boss pb to the database`)
+				.addField(`${config.prefix}deletepb <boss/all>`, `Deletes a specific boss entry from the database or all entries`)
 
 			message.channel.send(output)
 			return
 		}
+		case 'pb':{
+			let output = '';
+			if(args[0]== undefined || args[0] == ''){
+				output = 'Missing boss'
+				message.channel.send(output)
+				return
+			}
 
+			let requestBoss = args[0];
+			const boss = bossCategoryAliases(requestBoss);
+	
+			let validBoss = false
+			for(let i = 0; i < bossCategories.length; i++){
+				if (bossCategories[i] == boss){
+					validBoss = true;
+					break
+				}
+			}
+			if (validBoss == false){
+				output = 'invalid boss selected'
+				message.channel.send(output)
+				return
+			}
+			let query = `SELECT * FROM boss_kills WHERE boss = "${boss}" ORDER BY kill_time`
+			con.query(query, (err,res) =>{
+				if (err) throw err
+				let maxCount = 10;
+				output = createEmbed()
+				.setTitle(`${boss} Personal Bests`)
+				.setDescription(`Kill Time is H:MM:SS.s `)
+
+					let rankValue = `:first_place:\n:second_place:\n:third_place:\n:four: \n:five:\n:six:\n:seven:\n:eight:\n:nine:\n :keycap_ten: `
+					let playerName = ``
+					let killTime =``
+					for (let i = 0; i < maxCount; i++){
+						if(res[0] == undefined){
+							output = 'No results yet for that boss!'
+							message.channel.send(output)
+							return
+						}
+						if (res[i] == undefined){
+							break
+						}
+						// if (i > 2 ){
+						// 	rankValue += `${i+1}\n`
+						// 	}
+						playerName += `${res[i].player_name}\n`
+						killTime += `${res[i].kill_time}\n`
+					}
+						output = output.addFields(
+							{name: `Rank`, value: `${rankValue}`, inline: true},
+							{name: `Player Name`, value: `${playerName}`, inline: true},
+							{name: `Kill Time`, value: `${killTime}`, inline: true},
+							)
+					
+					rankValue = `:first_place:\n:second_place:\n:third_place:\n:four: \n:five:\n:six:\n:seven:\n:eight:\n:nine:\n :keycap_ten: `
+					let pbValue = ``
+					let imageValue = ``
+					for (let j = 0; j < maxCount; j++){
+						if (res[j] == undefined){
+							break
+						}
+						//  if (j > 2 ){
+						// rankValue += `${j+1}\n`
+						// }
+						pbValue += `${res[j].pb_date}\n`
+						imageValue += `[Link](${res[j].image_link})\n`
+
+					}
+						output = output.addFields(
+							{name: `Rank`, value: `${rankValue}`, inline: true},
+							{name: 'Date', value: `${pbValue}`, inline: true},
+							{name: 'Image Link', value: `${imageValue}`, inline: true},
+						)
+
+					
+					message.channel.send(output)
+			})
+			con.end( (err) => {
+				if (err) throw err
+			})
+			return
+
+		}
+
+		case 'mypbs': {
+			const User = message.member.id
+			output = createEmbed()
+				.setTitle(`Overall IronScape Rankings`)
+				.setDescription(`All PB's for <@${User}>`)
+					let bossValue = ``
+					let rankValue = ``
+					let killTime = ``
+					let bossArray = []
+			
+			for(let i = 0; i < bossCategories.length; i++){
+					let currentBoss = bossCategories[i]
+					let query = `SELECT * FROM boss_kills WHERE boss = "${currentBoss}" ORDER BY kill_time`
+				
+					con.query(query, (err, res) => {
+						if (err) throw err
+						bossArray = res
+						for(let j = 0; j < bossArray.length; j++){
+							if(bossArray[0] == undefined || bossArray[0] == []){
+								break
+							}
+						if(bossArray[j].discord_id == User){
+							bossValue += `${currentBoss}\n`
+								rankValue += `${j+1}\n`
+								killTime += `${bossArray[j].kill_time}\n`
+								 break
+						}
+						}
+						
+						
+					})
+					con.end( (err) => {
+						if (err) throw err
+					})
+					}				
+			setTimeout( () => {
+				if(bossValue,rankValue,killTime != ''){
+				output = output.addFields(
+					{name: 'Boss', value:`${bossValue}`, inline: true}, 
+					{name: 'Rank', value:`${rankValue}`, inline: true},
+					{name: 'Kill Time', value:`${killTime}`, inline: true},
+					
+					)
+					message.channel.send(output)
+				}
+				else{
+					output = `You do not have any pb's stored in the database <@${User}>`
+					message.channel.send(output)
+				}
+				
+			}, 3000)
+			return
+		}
+		
+		case 'addpb': {
+				let discordName = message.member.id
+				let requestBoss = args[0]
+				let killTime = args[1]
+				let link = args[2]
+				let playerAlias = args.length > 1 ? args.splice(3).join(" ").trim() : undefined
+				const timeRegex = new RegExp("^[0-9][:][0-5][0-9][:][0-5][0-9]")
+				const urlRegex = new RegExp("(^[<]?http[s]?:\/{2})")
+				const boss = bossCategoryAliases(requestBoss);
+				const pbDate = new Date().toLocaleDateString()
+
+				let output = '';
+    if (boss == null || playerAlias == '' || link == null || killTime == null){
+        output = 'Missing boss, kill time of boss, screenshot link, or player nickname'
+        message.channel.send(output)
+        return
+    }
+
+    if (killTime.match(timeRegex) === null) {
+        output = 'invalid time submission. please use H:MM:SS.s (hour, minutes, seconds, fractional seconds) format'
+        message.channel.send(output)
+        return
+    }
+
+	if (link.match(urlRegex) == null){
+		output = 'Incomplete URL. Please use a complete URL with http(s) and www included'
+		message.channel.send(output)
+		return
+	}
+	let validBoss = false
+	for(let i = 0; i < bossCategories.length; i++){
+		if (bossCategories[i] == boss){
+			validBoss = true;
+			break
+		}
+	}
+	if (validBoss == false){
+		output = 'invalid boss selected'
+		message.channel.send(output)
+		return
+	}
+
+	let query = `REPLACE INTO boss_kills(discord_id,player_name,boss,kill_time,pb_date,image_link) VALUES ("${discordName}","${playerAlias}","${boss}","${killTime}","${pbDate}","${link}")`
+	con.query(query, (err,res) =>{
+		if (err) throw err
+		output = ` **${boss}** PB added or updated for **<@${discordName}>**`
+		message.channel.send(output)
+	})
+	con.end((err) => {
+		if (err) throw err
+	})
+return
+	
+}
+		case "deletepb":{
+			let discordName = message.member.id
+			let requestBoss = args[0]
+			let user = message.client.users.cache.get(discordName)
+			const boss = bossCategoryAliases(requestBoss);
+
+			if (requestBoss == null){
+				output = 'Select a boss to remove that boss or `all` to remove all of your pb`s'
+				message.channel.send(output)
+				return
+			}
+			let query = `DELETE FROM boss_kills WHERE discord_id = "${discordName}" AND boss = "${boss}"`
+			let validBoss = false
+			if(requestBoss == 'all'){
+				validBoss = true
+				query = `DELETE FROM boss_kills WHERE discord_id = "${discordName}" LIMIT 20`
+			}
+			for(let i = 0; i < bossCategories.length; i++){
+				if (bossCategories[i] == boss){
+					validBoss = true;
+					break
+				}
+			}
+
+			if (validBoss == false){
+				output = 'invalid boss selected'
+				message.channel.send(output)
+				return
+			}
+			
+			
+			con.query(query, (err,res) => {
+				if (err) throw err
+				output = ` **${boss}** PB removed for <@${discordName}>`
+				message.channel.send(output)
+			})
+			con.end( (err) => {
+				if (err) throw err
+			})
+			return
+		}
+
+		
 		case "accept": {
 			function capitalizeFirstLetter(string) {
 				return string.charAt(0).toUpperCase() + string.slice(1);

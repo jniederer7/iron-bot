@@ -2,18 +2,7 @@ const Discord = require('discord.js')
 const config = require("./config")
 const commands = require("./commands")
 const { usersDb, hiscoresDb, removeDeprecatedUserData, updateUsersHiscoreData, timedQueue, logger } = require('./common')
-// var express = require('express');
-// var app = express();
-// var port = process.env.PORT || 8080;
-
-// app.get('/', function(req, res) {
-// 	res.render('index');
-// })
-
-// app.listen(port, () => {
-// 	console.log("Iron Bot is online!")
-// })
-
+  
 let updatingHiscores = false
 function updateHiscoreData() {
 	if (updatingHiscores) {
@@ -100,7 +89,8 @@ client.on('message', message => {
 
 	const args = message.content.slice(config.prefix.length).trim().split(" ")
 	const cmd = args.shift().toLowerCase()
-	logger.debug(`Received cmd: ${cmd} | args: ${args}`)
+	const timestamp = new Date();
+	logger.debug(`Received cmd: ${cmd} | args: ${args} | ${timestamp}`)
 	commands(message, cmd, args)
 
 	if (message.content.startsWith("$accept") || message.content.startsWith("$deny")){
@@ -115,15 +105,14 @@ client.login(config.token)
   .catch(err => logger.error(`Failed to authenticate: ${err}`))
 
 client.on("guildMemberAdd", member => {
+	const timestamp = new Date();
 	let memberRole = member.guild.roles.cache.find(role => role.id == "709430828656230541")
-	//Check to see if new member account is 7+ days old, then give a role if it is.
-	if(Date.now() - member.user.createdAt > 1000 * 60 * 60 * 24 * 7) {
+	//Check to see if new member account is 30+ days old, then give a role if it is.
+	if(Date.now() - member.user.createdAt > 1000 * 60 * 60 * 24 * 30) {
 		member.roles.add(memberRole);
-		console.log("Role added");
+		console.log( "Account Verified: " + member.displayName +" " + timestamp);
 	}
 	else {
-		//Send new members a dm for additional verification
-		member.send("Hi! Thank you for joining IronScape. Unfortunately, your account has been flagged as suspicious and we'll need additional verification to grant you access to the server. You can either send a friend request to our Moderators to discuss this or verify your phone in your discord account settings. We apologise for any inconvenience this may cause you.")
-		console.log("Message sent");
+		console.log("New Account Joined: " + member.displayName + " " + timestamp);
 	}
 })
