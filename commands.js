@@ -4,8 +4,8 @@ const { usersDb, hiscoresDb, removeDeprecatedUserData, timedQueue } = require('.
 const { Category, getCategoryByShortName } = require('./hiscores/categories')
 const { Endpoints, getEndpointByShortName } = require('./hiscores/endpoints')
 const ImageWriter = require('./ImageWriter')
-const {bossCategoryAliases, bossCategories } = require('./pb/bossCategories.js');
 const pbFunctions = require('./pb/pbCommands.js');
+const ccApps = require('./cc-apps/cc-app-commands.js')
 
 // 1-12 characters long, using letters, numbers, spaces, or hyphens
 // can't start or end with hypen or space, cant have two hyphens/spaces next to each other
@@ -18,21 +18,6 @@ const JAGEX_USERNAME_REGEX = /^(?=.{1,12}$)(?=^[a-zA-Z\d])(?!.*[-]{2})[a-zA-Z\d-
  * @param channel the channel object from message.channel, if null checks globablly
  * @returns boolean
  */
-
- const mysql = require('mysql')
-
- const con = mysql.createConnection({
-	 host: "localhost",
-	 user: "root",
-	 password: "",
-	 database: "boss_pbs",
-	 multipleStatements: true
-   });
-
-const startConnection = () => {
-	con.connect(function(err) {
-	if (err) throw err;
-  })};
 
 function hasPermissionsInChannel(member, channel) {
 	return member && member.permissionsIn(channel).has(Discord.Permissions.FLAGS.MANAGE_MESSAGES)
@@ -191,7 +176,7 @@ module.exports = (message, cmd, args) => {
 			// Create a hiscore-like imageBuffer
 			const buffer = ImageWriter.generateHiscoreImage(hiscoreData, endpoint, category)
 
-			const output = createEmbed()
+			const output = pbFunctions.createEmbed()
 				.setTimestamp()
 				.attachFiles([{name: "image.png", attachment: buffer}])
 				.setImage('attachment://image.png')
@@ -250,7 +235,7 @@ module.exports = (message, cmd, args) => {
 		}
 		case "help": {
 			// TODO: PM this to user instead of printing directly in channel?
-			const output = createEmbed()
+			const output = pbFunctions.createEmbed()
 				.setTitle('Commands')
 				.setDescription('This bot tracks OSRS accounts and adds them to a custom clan hiscore list. It will track one RSN per discord account and *will not* update automatically if you name change. Hiscore stats will be updated at a regular interval.')
 
@@ -271,393 +256,34 @@ module.exports = (message, cmd, args) => {
 			return
 		}
 		case 'pb':{
-			pbFunctions.pb()
+			pbFunctions.pb(message,args)
+			return
 
 		}
 
 		case 'mypbs': {
-			const User = message.member.id
-			output = createEmbed()
-				.setTitle(`Overall IronScape Rankings`)
-				.setDescription(`All PB's for <@${User}>`)
-					let bossValue = ``
-					let rankValue = ``
-					let killTime = ``
-					let bossArray = []
-			
-			for(let i = 0; i < bossCategories.length; i++){
-					let currentBoss = bossCategories[i]
-					let query = `SELECT * FROM boss_kills WHERE boss = "${currentBoss}" ORDER BY kill_time`
-				
-					con.query(query, (err, res) => {
-						if (err) throw err
-						bossArray = res
-						for(let j = 0; j < bossArray.length; j++){
-							if(bossArray[0] == undefined || bossArray[0] == []){
-								break
-							}
-						if(bossArray[j].discord_id == User){
-							bossValue += `${currentBoss}\n`
-								rankValue += `${j+1}\n`
-								killTime += `${bossArray[j].kill_time}\n`
-								 break
-						}
-						}
-						
-						
-					})
-					con.end( (err) => {
-						if (err) throw err
-					})
-					}				
-			setTimeout( () => {
-				if(bossValue,rankValue,killTime != ''){
-				output = output.addFields(
-					{name: 'Boss', value:`${bossValue}`, inline: true}, 
-					{name: 'Rank', value:`${rankValue}`, inline: true},
-					{name: 'Kill Time', value:`${killTime}`, inline: true},
-					
-					)
-					message.channel.send(output)
-				}
-				else{
-					output = `You do not have any pb's stored in the database <@${User}>`
-					message.channel.send(output)
-				}
-				
-			}, 3000)
+			pbFunctions.myPBs(message)			
 			return
 		}
 		
 		case 'addpb': {
-				let discordName = message.member.id
-				let requestBoss = args[0]
-				let killTime = args[1]
-				let link = args[2]
-				let playerAlias = args.length > 1 ? args.splice(3).join(" ").trim() : undefined
-				const timeRegex = new RegExp("^[0-9][:][0-5][0-9][:][0-5][0-9]")
-				const urlRegex = new RegExp("(^[<]?http[s]?:\/{2})")
-				const boss = bossCategoryAliases(requestBoss);
-				const pbDate = new Date().toLocaleDateString()
-
-				let output = '';
-    if (boss == null || playerAlias == '' || link == null || killTime == null){
-        output = 'Missing boss, kill time of boss, screenshot link, or player nickname'
-        message.channel.send(output)
-        return
-    }
-
-    if (killTime.match(timeRegex) === null) {
-        output = 'invalid time submission. please use H:MM:SS.s (hour, minutes, seconds, fractional seconds) format'
-        message.channel.send(output)
-        return
-    }
-
-	if (link.match(urlRegex) == null){
-		output = 'Incomplete URL. Please use a complete URL with http(s) and www included'
-		message.channel.send(output)
-		return
-	}
-	let validBoss = false
-	for(let i = 0; i < bossCategories.length; i++){
-		if (bossCategories[i] == boss){
-			validBoss = true;
-			break
-		}
-	}
-	if (validBoss == false){
-		output = 'invalid boss selected'
-		message.channel.send(output)
-		return
-	}
-
-	let query = `REPLACE INTO boss_kills(discord_id,player_name,boss,kill_time,pb_date,image_link) VALUES ("${discordName}","${playerAlias}","${boss}","${killTime}","${pbDate}","${link}")`
-	con.query(query, (err,res) =>{
-		if (err) throw err
-		output = ` **${boss}** PB added or updated for **<@${discordName}>**`
-		message.channel.send(output)
-	})
-	con.end((err) => {
-		if (err) throw err
-	})
-return
+			pbFunctions.addPB(message,args)
+			return
 	
 }
 		case "deletepb":{
-			let discordName = message.member.id
-			let requestBoss = args[0]
-			let user = message.client.users.cache.get(discordName)
-			const boss = bossCategoryAliases(requestBoss);
-
-			if (requestBoss == null){
-				output = 'Select a boss to remove that boss or `all` to remove all of your pb`s'
-				message.channel.send(output)
-				return
-			}
-			let query = `DELETE FROM boss_kills WHERE discord_id = "${discordName}" AND boss = "${boss}"`
-			let validBoss = false
-			if(requestBoss == 'all'){
-				validBoss = true
-				query = `DELETE FROM boss_kills WHERE discord_id = "${discordName}" LIMIT 20`
-			}
-			for(let i = 0; i < bossCategories.length; i++){
-				if (bossCategories[i] == boss){
-					validBoss = true;
-					break
-				}
-			}
-
-			if (validBoss == false){
-				output = 'invalid boss selected'
-				message.channel.send(output)
-				return
-			}
-			
-			
-			con.query(query, (err,res) => {
-				if (err) throw err
-				output = ` **${boss}** PB removed for <@${discordName}>`
-				message.channel.send(output)
-			})
-			con.end( (err) => {
-				if (err) throw err
-			})
+			pbFunctions.deletePB(message,args)
 			return
 		}
 
 		
 		case "accept": {
-			function capitalizeFirstLetter(string) {
-				return string.charAt(0).toUpperCase() + string.slice(1);
-			  }
-			const requestedRSN = args.length > 1 ? args.splice(2).join(" ").trim() : undefined
-			const userRSN = requestedRSN;
-			let ccEndPoint = args[0];
-			const userEndPoint = args[1];
-			const user = message.client.users.cache.get(userEndPoint);
-
-			if (ccEndPoint != null){
-				ccEndPoint = ccEndPoint.toLowerCase();
-			}
-
-			if (!hasPermissionsInChannel(message.member, message.channel)) {
-				message.channel.send(`Sorry ${message.member}, you do not have access to the \`${cmd}\` command`)
-				return
-			}
-
-			if(message.channel.id != "725751906110013520") {
-				message.channel.send("This command is disabled in this channel");
-				return
-			}
-
-
-			if (userEndPoint == null) {
-				message.channel.send("Please add a discord ID to send a message to");
-				return
-			}
-
-			if (user == undefined) {
-				message.channel.send("Incorrect Discord ID");
-				return
-			}
-			if (ccEndPoint == "hardcore" || ccEndPoint == "ultimate"){
-			user.send(`Hello! Your application to ${capitalizeFirstLetter(ccEndPoint)} CC has been accepted and you will be ranked in game within 48 hours. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
-			
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-				message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} CC application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>`);
-			}).catch( (e) => {
-				message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} CC application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-
-				return;
-			});;
-			return
-			}
-
-			if (ccEndPoint == "overflow") {
-				user.send(`Hello! Your application to IronmanCC has been accepted and you will be ranked in game within 48 hours. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
-			
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-				message.channel.send(`IronmanCC application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>`);
-			}).catch( (e) => {
-				message.channel.send(`IronmanCC application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-
-				return;
-			});;
-			return
-			};
-
-			if (ccEndPoint == "total") {
-				user.send(`Hello! Your application to IronmanCC2k has been accepted and you will be ranked in game within 48 hours. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
-			
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-				message.channel.send(`IronmanCC2k application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>`);
-			}).catch( (e) => {
-				message.channel.send(`IronmanCC2k application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-
-				return;
-			});;
-			return
-			};
-
-			if (ccEndPoint == "ironscape"){
-
-			user.send(`Hello! Your application to ${capitalizeFirstLetter(ccEndPoint)} FC has been accepted and you will be ranked in game within 48 hours. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
-			
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-				message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} FC application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>`);
-			}).catch( (e) => {
-				message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} FC application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-				return;
-			});
-			return;
-			}
-
-			message.channel.send("incorrect or missing cc end point");
+			ccApps.acceptApp(message,cmd,args)
 			return
 		}
 
 		case "deny":{
-			function capitalizeFirstLetter(string) {
-				return string.charAt(0).toUpperCase() + string.slice(1);
-			  }
-			let ccEndPoint = args[0];
-			const userEndPoint = args[1];
-			const user = message.client.users.cache.get(userEndPoint);
-			const reason = args.length > 1 ? args.splice(2).join(" ").trim() : undefined
-
-			if (ccEndPoint != null){
-				ccEndPoint = ccEndPoint.toLowerCase();
-			}
-
-			if (!hasPermissionsInChannel(message.member, message.channel)) {
-				message.channel.send(`Sorry ${message.member}, you do not have access to the \`${cmd}\` command`)
-				return
-			}
-
-			if(message.channel.id != "725751906110013520") {
-				message.channel.send("This command is disabled in this channel");
-				return
-			}
-			
-			if (reason == "") {
-				message.channel.send(`Please add a reason for denial`);
-				return;
-			}
-
-			if (userEndPoint == null) {
-				message.channel.send("Please add a discord ID to send a message to");
-				return
-			}
-
-			if (user == undefined) {
-				message.channel.send("Incorrect Discord ID");
-				return
-			}
-			if (ccEndPoint == "hardcore" || ccEndPoint == "ultimate"){
-			user.send(`Hello, unfortunately your application to ${capitalizeFirstLetter(ccEndPoint)} CC has been denied.
-
-Note from Leadership: \`${reason}\`
-
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-				message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} CC application denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}`);
-							}).catch( (e) => {
-			message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} CC application denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-				return;
-			});
-			return
-			}
-
-			if( ccEndPoint == "overflow"){
-				user.send(`Hello, unfortunately your application to IronmanCC has been denied.
-
-Note from Leadership: \`${reason}\`
-
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-				message.channel.send(`IronmanCC application Denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}`);
-							}).catch( (e) => {
-			message.channel.send(`IronmanCC application denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-				return;
-			});
-			return
-			};
-
-			if( ccEndPoint == "total"){
-				user.send(`Hello, unfortunately your application to IronmanCC2k has been denied.
-
-Note from Leadership: \`${reason}\`
-
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-				message.channel.send(`IronmanCC2k application Denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}`);
-							}).catch( (e) => {
-			message.channel.send(`IronmanCC2k application denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-				return;
-			});
-			return
-			};
-
-			if (ccEndPoint == "ironscape"){
-			user.send(`Hello unfortunately your application to ${capitalizeFirstLetter(ccEndPoint)} FC has been denied.
-			
-Note from Leadership: \`${reason}\`
-
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-	message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} FC application denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}`);
-				}).catch( (e) => {
-message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} CC application denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-			return;
-				});
-			return
-			}
-
-			message.channel.send("incorrect or missing cc end point");
+			ccApps.denyApp(message,cmd,args)
 			return
 		}
 		default: {
@@ -665,8 +291,4 @@ Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
 			return
 		}
 	 }
-}
-
-function createEmbed () {
-	return new Discord.MessageEmbed().setColor(0xec644b)
 }
