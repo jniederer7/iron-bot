@@ -11,7 +11,7 @@ function hasPermissionsInChannel(member, channel) {
 function acceptApp (message,cmd, args) {
     const userRSN = args.length > 1 ? args.splice(2).join(" ").trim() : undefined
 			let ccEndPoint = args[0];
-			const userEndPoint = args[1];
+			let userEndPoint = args[1];
 			const user = message.client.users.cache.get(userEndPoint);
 
 			if (ccEndPoint != null){

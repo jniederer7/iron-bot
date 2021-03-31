@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const config = require("./config")
 const commands = require("./commands")
 const { usersDb, hiscoresDb, removeDeprecatedUserData, updateUsersHiscoreData, timedQueue, logger } = require('./common')
+const pbFunction = require("./pb/pbCommands.js")
   
 let updatingHiscores = false
 function updateHiscoreData() {
@@ -72,6 +73,8 @@ client.on('ready', function (evt) {
 
 	processTimedQueue() 
 	client.setInterval(processTimedQueue, 10 * 1000) // Every 10 seconds
+	// Queries database to prevent connection from timing out
+	client.setInterval(pbFunction.sqlQuery, 60 * 60 * 1000) //Every hour
 })
 
 client.on('message', message => {

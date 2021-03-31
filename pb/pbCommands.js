@@ -8,7 +8,6 @@ const con = mysql.createConnection({
     user: "root",
     password: "",
     database: "boss_pbs",
-    multipleStatements: true
   });
 
 let output = '';
@@ -19,8 +18,14 @@ function pb(message, args) {
 				message.channel.send(output)
 				return
 			}
-
+            
 			const boss = bossCategoryAliases(args[0]);
+            let page = args[1]
+            let maxCount = 10;
+            let pbPagination = parseInt(page * maxCount - maxCount) || 1
+            if (pbPagination < 1) {
+                pbPagination = 1
+            }
             // Checks if user selected boss has PB's that are being tracked in the database
 			let validBoss = false
 			for(let i = 0; i < bossCategories.length; i++){
@@ -35,12 +40,12 @@ function pb(message, args) {
 				return
 			}
             // Queries database for user selected boss, orders by kill time then creaes an embed as an output
-			let query = `SELECT * FROM boss_kills WHERE boss = "${boss}" ORDER BY kill_time`
+			let query = `SELECT * FROM boss_kills WHERE boss = "${boss}" ORDER BY kill_time, pb_date`
 
             con.query(query, (err,res) =>{
 				if (err) throw err
                 //Sets the maximum number to players to be outputted
-				let maxCount = 10;
+				
 				output = createEmbed()
 				.setTitle(`${boss} Personal Bests`)
 				.setDescription(`Kill Time is H:MM:SS.s `)
@@ -53,28 +58,39 @@ function pb(message, args) {
 					let imageValue = ``
                     //Loops through  *maxCount* results grabbing player name, kill time, date and image link
 					for (let i = 0; i < maxCount; i++){
-                        // Checks to make sure results exist. return if doesn't
-						if(res[0] == undefined){
-							output = 'No results yet for that boss!'
+                        if(res[0] == undefined){
+							output = 'No results for this boss yet'
 							message.channel.send(output)
 							return
 						}
+                        let paginatedResults = res[i]
+                        if(pbPagination > 1){
+                        paginatedResults = res[i + pbPagination]
+
+                        if(res[0+pbPagination] == undefined){
+							output = `${boss} does not have a page ${page} of results yet`
+							message.channel.send(output)
+							return
+						}
+                    }
+                        // Checks to make sure results exist. return if doesn't
+
                         //Checks if there are < maxCount results and breaks the loop early if so
-						if (res[i] == undefined){
+						if (paginatedResults == undefined){
 							break
 						}
                         //Set rankValue to empty string and uncomment code 1 line below if numbers wanted instead of emojis
 						// 	rankValue += `${i+1}\n`
-                        if( i < 10){
+                        if( i < 10 && pbPagination == 1){
                             rankValue += emojiArray[i]
                         }
                         else {
-                            rankValue += `${i+1}\n`
+                            rankValue += `${i+pbPagination+1}\n`
                         }
-						playerName += `${res[i].player_name}\n`
-						killTime += `${res[i].kill_time}\n`
-                        pbValue += `${res[i].pb_date}\n`
-						imageValue += `[Link](${res[i].image_link})\n`
+						playerName += `${paginatedResults.player_name}\n`
+						killTime += `${paginatedResults.kill_time}\n`
+                        pbValue += `${paginatedResults.pb_date}\n`
+						imageValue += `[Link](${paginatedResults.image_link})\n`
 					}
                         // Discord limits embeds to 3 columns per row. Rank column duplicated for better styling
 						output = output.addFields(
@@ -99,32 +115,40 @@ function myPBs(message) {
             let bossValue = ``
             let rankValue = ``
             let killTime = ``
-    //Loops through every boss
-    for(let i = 0; i < bossCategories.length; i++){
-            let currentBoss = bossCategories[i]
-            let query = `SELECT * FROM boss_kills WHERE boss = "${currentBoss}" ORDER BY kill_time`
-            //Queries kill time for each boss sorted by kill time
-            con.query(query, (err, res) => {
-                if (err) throw err
-                //Inside loop to loop through all results for each boss
-                for(let j = 0; j < res.length; j++){
-                    //Checks to make sure result exists and isn't empty
-                    if(res[0] == undefined || res[0] == []){
-                        break
-                    }
-                    // Checks if user has an entry for the boss's results and adds to output variables and breaks loop early if so
-                if(res[j].discord_id == User){
-                    bossValue += `${currentBoss}\n`
+
+     let query = `select * from boss_kills order by boss, kill_time, pb_date;`
+     con.query(query, (err, res) => {
+         if (err) throw err
+        if (res[0] == undefined){
+            output = `no bosses in database`
+            message.channel.send(output)
+            return
+        }
+        //sets bossArray to the first result as baseline to match against
+        let bossArray = [res[0]]
+        for ( let i = 1; i < res.length; i++){
+            // if next boss = previous boss push the next boss into the bossArray
+                if (res[i].boss == res[i-1].boss){
+                    bossArray.push(res[i]);
+                    
+            }
+            if (res[i].boss != res[i-1].boss || i == res.length - 1) {
+                // if next boss != current boss, loop through bossArray searching for discord id matching the user
+                for( let j = 0; j < bossArray.length; j++){
+                    //if a discord id match is found add results for later output then break inner loop
+                    if(bossArray[j].discord_id == User){
+                        bossValue += `${bossArray[j].boss}\n`
                         rankValue += `${j+1}\n`
-                        killTime += `${res[j].kill_time}\n`
-                         break
+                        killTime += `${bossArray[j].kill_time}\n`
+                        break
                 }
-                }
-                
-                
-            })
-    }
-    //Sets timeout to make sure queries finish before the output is returned
+                //reset bossArray to the first result of the next boss to be checked for matches 
+            }
+            bossArray = [res[i]]
+        }
+     }
+    })
+    //Sets timeout to make sure query has finished before the output is returned
     setTimeout( () => {
         //checks to make sure user has at least 1 result
         if(bossValue,rankValue,killTime != ''){
@@ -141,7 +165,7 @@ function myPBs(message) {
             message.channel.send(output)
         }
     
-    }, 3000)
+    }, 1000)
 }
 
 function addPB(message,args) {
@@ -203,7 +227,7 @@ function deletePB(message, args) {
             let discordName = message.member.id
 			const boss = bossCategoryAliases(args[0]);
 
-			if (requestBoss == null){
+			if (args[0] == null){
 				output = 'Select a boss to remove that boss or `all` to remove all of your pb`s'
 				message.channel.send(output)
 				return
@@ -212,7 +236,7 @@ function deletePB(message, args) {
 			let query = `DELETE FROM boss_kills WHERE discord_id = "${discordName}" AND boss = "${boss}"`
 			let validBoss = false
             //Allows users to delete all their entries at once. changes query to delete all entries from user
-			if(requestBoss == 'all'){
+			if(args[0] == 'all'){
 				validBoss = true
 				query = `DELETE FROM boss_kills WHERE discord_id = "${discordName}" LIMIT 20`
 			}
@@ -238,6 +262,14 @@ function deletePB(message, args) {
 			})
 }
 
+function sqlQuery () {
+    let query = 'SELECT 1'
+    con.query(query, (err, res) =>{
+        if (err) throw err
+        return
+    })
+}
+
 function createEmbed () {
 	return new Discord.MessageEmbed().setColor(0xec644b)
 }
@@ -247,5 +279,6 @@ module.exports = {
     myPBs,
     addPB,
     deletePB,
-    createEmbed
+    createEmbed,
+    sqlQuery
 }

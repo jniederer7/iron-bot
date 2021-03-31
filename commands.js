@@ -247,10 +247,10 @@ module.exports = (message, cmd, args) => {
 				.addField(`${config.prefix}update`, `Adds your RSN to the immediate update queue. Happens automatically after setting RSN or Iron type.`)
 				.addField(`${config.prefix}whois <rsn>`, `Identifies the discord account tied to the specified RSN.`)
 				.addField(`${config.prefix}hs <type> [category]`, `Shows the account type hiscore list for the specific category (skill or boss). Leaving category blank will default to the overall category`)
-				.addField(`${config.prefix}pb <boss>`, `Displays a list the fastest boss kill times by IronScape members`)
+				.addField(`${config.prefix}pb <boss> <page #>`, `Displays a list the fastest boss kill times by IronScape members. Page # optional to show 10 results other than top 10. I.e. ${config.prefix}pb cox 2 would display a page of rank 11-20`)
 				.addField(`${config.prefix}mypbs`, `displays a list of all the pb's you have tracked with the bot and overall ranks in the clan`)
-				.addField(`${config.prefix}addpb <boss> <kill time> <link> <nickname>`, `adds a boss pb to the database`)
-				.addField(`${config.prefix}deletepb <boss/all>`, `Deletes a specific boss entry from the database or all entries`)
+				.addField(`${config.prefix}addpb <boss> <kill time> <link> <nickname>`, `adds/updates a boss pb to the database. 1 pb entry per boss. old pb entries will automatically be replaced with new ones`)
+				.addField(`${config.prefix}deletepb <boss/all>`, `Deletes a specific boss entry from the database or all entries tied to your account`)
 
 			message.channel.send(output)
 			return
