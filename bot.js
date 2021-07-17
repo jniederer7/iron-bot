@@ -96,7 +96,7 @@ client.on('message', message => {
 	logger.debug(`Received cmd: ${cmd} | args: ${args} | ${timestamp}`)
 	commands(message, cmd, args)
 
-	if (message.content.startsWith("$accept") || message.content.startsWith("$deny")){
+	if (message.content.startsWith("$accept") || message.content.startsWith("$deny") || message.content.startsWith("$verify")){
 		message.delete({timeout: 30 * 1000});
 	}
 })
@@ -110,12 +110,12 @@ client.login(config.token)
 client.on("guildMemberAdd", member => {
 	const timestamp = new Date();
 	let memberRole = member.guild.roles.cache.find(role => role.id == "709430828656230541")
-	//Check to see if new member account is 30+ days old, then give a role if it is.
-	if(Date.now() - member.user.createdAt > 1000 * 60 * 60 * 24 * 30) {
+	//Check to see if new member account is 30+ days old and has a non default avatar picture, then gives a role if it is.
+	if(Date.now() - member.user.createdAt > 1000 * 60 * 60 * 24 * 30 && member.user.avatar != null) {
 		member.roles.add(memberRole);
 		console.log( "Account Verified: " + member.displayName +" " + timestamp);
 	}
 	else {
-		console.log("New Account Joined: " + member.displayName + " " + timestamp);
+		console.log("Sus Account Joined: " + member.displayName + " " + timestamp);
 	}
 })

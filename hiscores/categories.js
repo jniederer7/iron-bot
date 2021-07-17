@@ -63,6 +63,7 @@ const categories = [
 	"K'ril tsutsaroth",
 	"Mimic",
 	"Nightmare",
+	"Phosani's Nightmare",
 	"Obor",
 	"Sarachnis",
 	"Scorpia",
@@ -71,6 +72,7 @@ const categories = [
 	"Gauntlet",
 	"Corrupted gauntlet",
 	"Theatre of blood",
+	"Theatre of blood hard mode",
 	"Thermonuclear smoke devil",
 	"Tz-kal-zuk",
 	"Tz-tok-jad",
@@ -147,23 +149,25 @@ const Category = {
 	KRIL_TSUTSAROTH: categories[61],
 	MIMIC: categories[62],
 	NIGHTMARE: categories[63],
-	OBOR: categories[64],
-	SARACHNIS: categories[65],
-	SCORPIA: categories[66],
-	SKOTIZO: categories[67],
-	TEMPOROSS: categories[68],
-	GAUNTLET: categories[69],
-	CORRUPTED_GAUNTLET: categories[70],
-	THEATRE_OF_BLOOD: categories[71],
-	THERMONUCLEAR_SMOKE_DEVIL: categories[72],
-	TZ_KAL_ZUK: categories[73],
-	TZ_TOK_JAD: categories[74],
-	VENENATIS: categories[75],
-	VETION: categories[76],
-	VORKATH: categories[77],
-	WINTERTODT: categories[78],
-	ZALCANO: categories[79],
-	ZULRAH: categories[80],
+	PHOSANIS_NIGHTMARE: categories[64],
+	OBOR: categories[65],
+	SARACHNIS: categories[66],
+	SCORPIA: categories[67],
+	SKOTIZO: categories[68],
+	TEMPOROSS: categories[69],
+	GAUNTLET: categories[70],
+	CORRUPTED_GAUNTLET: categories[71],
+	THEATRE_OF_BLOOD: categories[72],
+	THEATRE_OF_BLOOD_HARD_MODE: categories[73],
+	THERMONUCLEAR_SMOKE_DEVIL: categories[74],
+	TZ_KAL_ZUK: categories[75],
+	TZ_TOK_JAD: categories[76],
+	VENENATIS: categories[77],
+	VETION: categories[78],
+	VORKATH: categories[79],
+	WINTERTODT: categories[80],
+	ZALCANO: categories[81],
+	ZULRAH: categories[82],
 }
 
 getCategoryByShortName = (name) => {
@@ -367,6 +371,13 @@ getCategoryByShortName = (name) => {
 		case "the nightmare":
 		case "nm":
 			return "Nightmare"
+		case "phosani nm":
+		case "phosanis nm":
+        case "phosani":
+        case "phsoanis":
+        case "hm nm":
+        case "hard nm":
+            return "Phosani's Nightmare"
 		case "sarac":
 		case "sarach":
 			return "Sarachnis"
@@ -391,6 +402,16 @@ getCategoryByShortName = (name) => {
 		case "verzik vitur":
 		case "raids 2":
 			return "Theatre of blood"
+		case "tob hm":
+		case "hm tob":
+		case "tobhm":
+		case "hmtob":
+		case "tob hard mode":	
+		case "tob hard":
+		case "hard tob":
+		case "cm tob":
+		case "tob cm":
+			return "Theatre of blood hard mode"
 		case "thermy":
 			return "Thermonuclear smoke devil"
 		case "zuk":

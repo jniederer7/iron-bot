@@ -9,6 +9,7 @@ const bossCategories = [
 	"Hespori",
 	"Mimic",
 	"Solo Nightmare",
+    "Phosani's Nightmare",
 	"Gauntlet",
 	"Corrupted Gauntlet",
 	"Tz-kal-zuk",
@@ -56,6 +57,12 @@ bossCategoryAliases = (bossName) => {
         case "the nightmare":
         case "nm":
             return "Solo Nightmare"
+        case "phosaninm":
+        case "phosani":
+        case "phsoanis":
+        case "hmnm":
+        case "hardnm":
+            return "Phosani's Nightmare"
         case "the gauntlet":
 		case "gaunt":
             return "Gauntlet"

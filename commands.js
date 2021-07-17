@@ -286,6 +286,10 @@ module.exports = (message, cmd, args) => {
 			ccApps.denyApp(message,cmd,args)
 			return
 		}
+		case "verify":{
+			ccApps.verify(message,cmd, args)
+			return
+		}
 		default: {
 			message.channel.send(`${message.member} I don't know that command. Try \`$help\`.`)
 			return

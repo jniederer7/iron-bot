@@ -21,6 +21,7 @@ function pb(message, args) {
             
 			const boss = bossCategoryAliases(args[0]);
             let page = args[1]
+            //Sets the maximum number to players to be outputted
             let maxCount = 10;
             let pbPagination = parseInt(page * maxCount - maxCount) || 1
             if (pbPagination < 1) {
@@ -44,7 +45,7 @@ function pb(message, args) {
 
             con.query(query, (err,res) =>{
 				if (err) throw err
-                //Sets the maximum number to players to be outputted
+                
 				
 				output = createEmbed()
 				.setTitle(`${boss} Personal Bests`)
@@ -171,7 +172,7 @@ function myPBs(message) {
 function addPB(message,args) {
     const discordName = message.member.id
     //boss user is submitting a pb for, checks aliases for a match
-    const boss = bossCategoryAliases(args[0])
+    const boss = bossCategoryAliases(args[0]) || null
     let killTime = args[1]
     let link = args[2]
     let playerAlias = args.length > 1 ? args.splice(3).join(" ").trim() : undefined

@@ -18,10 +18,10 @@ function acceptApp (message,cmd, args) {
 				ccEndPoint = ccEndPoint.toLowerCase();
 			}
 
-			if (!hasPermissionsInChannel(message.member, message.channel)) {
-				message.channel.send(`Sorry ${message.member}, you do not have access to the \`${cmd}\` command`)
-				return
-			}
+			// if (!hasPermissionsInChannel(message.member, message.channel)) {
+			// 	message.channel.send(`Sorry ${message.member}, you do not have access to the \`${cmd}\` command`)
+			// 	return
+			// }
 
 			if(message.channel.id != "725751906110013520" && message.channel.id != "672659118976139311") {
 				message.channel.send("This command is disabled in this channel");
@@ -38,8 +38,8 @@ function acceptApp (message,cmd, args) {
 				message.channel.send("Incorrect Discord ID");
 				return
 			}
-			if (ccEndPoint == "hardcore" || ccEndPoint == "ultimate"){
-			user.send(`Hello! Your application to ${capitalizeFirstLetter(ccEndPoint)} CC has been accepted and you will be ranked in game within 48 hours. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
+			if (ccEndPoint == "hardcore" || ccEndPoint == "ultimate" || ccEndPoint=="ironman" || ccEndPoint=="total"){
+			user.send(`Hello! Your application to ${capitalizeFirstLetter(ccEndPoint)} CC has been accepted! You should guest in the CC and contact a mod in game to be ranked. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
 			
 This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
 			.then( () => {
@@ -57,55 +57,17 @@ Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
 			return
 			}
 
-			if (ccEndPoint == "overflow") {
-				user.send(`Hello! Your application to IronmanCC has been accepted and you will be ranked in game within 48 hours. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
-			
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-				message.channel.send(`IronmanCC application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>`);
-			}).catch( (e) => {
-				message.channel.send(`IronmanCC application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-
-				return;
-			});;
-			return
-			};
-
-			if (ccEndPoint == "total") {
-				user.send(`Hello! Your application to IronmanCC2k has been accepted and you will be ranked in game within 48 hours. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
-			
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-				message.channel.send(`IronmanCC2k application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>`);
-			}).catch( (e) => {
-				message.channel.send(`IronmanCC2k application accepted for:
-RSN: ${userRSN}
-Discord: <@${userEndPoint}>
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-
-				return;
-			});;
-			return
-			};
-
 			if (ccEndPoint == "ironscape"){
 
-			user.send(`Hello! Your application to ${capitalizeFirstLetter(ccEndPoint)} FC has been accepted and you will be ranked in game within 48 hours. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
+			user.send(`Hello! Your application to ${capitalizeFirstLetter(ccEndPoint)}  has been accepted! You should guest in the cc and contact a mod to be ranked in game. Please make sure to read our rules found at https://i.imgur.com/ri5GsdG.png
 			
 This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
 			.then( () => {
-				message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} FC application accepted for:
+				message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} application accepted for:
 RSN: ${userRSN}
 Discord: <@${userEndPoint}>`);
 			}).catch( (e) => {
-				message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} FC application accepted for:
+				message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} application accepted for:
 RSN: ${userRSN}
 Discord: <@${userEndPoint}>
 Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
@@ -128,10 +90,10 @@ function denyApp (message,cmd, args){
 				ccEndPoint = ccEndPoint.toLowerCase();
 			}
 
-			if (!hasPermissionsInChannel(message.member, message.channel)) {
-				message.channel.send(`Sorry ${message.member}, you do not have access to the \`${cmd}\` command`)
-				return
-			}
+			// if (!hasPermissionsInChannel(message.member, message.channel)) {
+			// 	message.channel.send(`Sorry ${message.member}, you do not have access to the \`${cmd}\` command`)
+			// 	return
+			// }
 
 			if(message.channel.id != "725751906110013520" && message.channel.id != "672659118976139311") {
 				message.channel.send("This command is disabled in this channel");
@@ -152,7 +114,7 @@ function denyApp (message,cmd, args){
 				message.channel.send("Incorrect Discord ID");
 				return
 			}
-			if (ccEndPoint == "hardcore" || ccEndPoint == "ultimate"){
+			if (ccEndPoint == "hardcore" || ccEndPoint == "ultimate" || ccEndPoint=="ironman" || ccEndPoint=="total"){
 			user.send(`Hello, unfortunately your application to ${capitalizeFirstLetter(ccEndPoint)} CC has been denied.
 
 Note from Leadership: \`${reason}\`
@@ -172,58 +134,18 @@ Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
 			return
 			}
 
-			if( ccEndPoint == "overflow"){
-				user.send(`Hello, unfortunately your application to IronmanCC has been denied.
-
-Note from Leadership: \`${reason}\`
-
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-				message.channel.send(`IronmanCC application Denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}`);
-							}).catch( (e) => {
-			message.channel.send(`IronmanCC application denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-				return;
-			});
-			return
-			};
-
-			if( ccEndPoint == "total"){
-				user.send(`Hello, unfortunately your application to IronmanCC2k has been denied.
-
-Note from Leadership: \`${reason}\`
-
-This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
-			.then( () => {
-				message.channel.send(`IronmanCC2k application Denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}`);
-							}).catch( (e) => {
-			message.channel.send(`IronmanCC2k application denied for:
-Discord: <@${userEndPoint}>
-Reason: ${reason}
-Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
-				return;
-			});
-			return
-			};
-
 			if (ccEndPoint == "ironscape"){
-			user.send(`Hello unfortunately your application to ${capitalizeFirstLetter(ccEndPoint)} FC has been denied.
+			user.send(`Hello unfortunately your application to ${capitalizeFirstLetter(ccEndPoint)} has been denied.
 			
 Note from Leadership: \`${reason}\`
 
 This message was sent automatically by this bot and will not reply to further messages. To discuss your application more in depth please contact a member of Leadership in the Ironscape Discord.`)
 			.then( () => {
-	message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} FC application denied for:
+	message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} application denied for:
 Discord: <@${userEndPoint}>
 Reason: ${reason}`);
 				}).catch( (e) => {
-message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} CC application denied for:
+message.channel.send(`${capitalizeFirstLetter(ccEndPoint)} application denied for:
 Discord: <@${userEndPoint}>
 Reason: ${reason}
 Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
@@ -234,7 +156,14 @@ Message failed to send: <@${userEndPoint}> has their DM's turned off.`);
 
 			message.channel.send("incorrect or missing cc end point");
 }
+
+function verify(message){
+	const role = message.guild.roles.cache.find(role => role.id === '709430828656230541');
+const member = message.member
+member.roles.add(role);
+}
 module.exports = {
     acceptApp,
-    denyApp
+    denyApp,
+	verify
 }
