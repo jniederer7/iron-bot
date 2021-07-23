@@ -4,8 +4,9 @@ const { usersDb, hiscoresDb, removeDeprecatedUserData, timedQueue } = require('.
 const { Category, getCategoryByShortName } = require('./hiscores/categories')
 const { Endpoints, getEndpointByShortName } = require('./hiscores/endpoints')
 const ImageWriter = require('./ImageWriter')
-const pbFunctions = require('./pb/pbCommands.js');
+const pbFunctions = require('./pb/pbCommands.js')
 const ccApps = require('./cc-apps/cc-app-commands.js')
+const ironscapeClan = require('./cc-hiscores/ironscape.js')
 
 // 1-12 characters long, using letters, numbers, spaces, or hyphens
 // can't start or end with hypen or space, cant have two hyphens/spaces next to each other
@@ -288,6 +289,11 @@ module.exports = (message, cmd, args) => {
 		}
 		case "verify":{
 			ccApps.verify(message,cmd, args)
+			return
+		}
+		case 'ironscapelookup':{
+			//message.channel.send("Test complete")
+			ironscapeClan.ironscapelookup(message,cmd,args)
 			return
 		}
 		default: {
