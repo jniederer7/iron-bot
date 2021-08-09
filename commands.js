@@ -252,6 +252,7 @@ module.exports = (message, cmd, args) => {
 				.addField(`${config.prefix}mypbs`, `displays a list of all the pb's you have tracked with the bot and overall ranks in the clan`)
 				.addField(`${config.prefix}addpb <boss> <kill time> <link> <nickname>`, `adds/updates a boss pb to the database. 1 pb entry per boss. old pb entries will automatically be replaced with new ones`)
 				.addField(`${config.prefix}deletepb <boss/all>`, `Deletes a specific boss entry from the database or all entries tied to your account`)
+				.addField(`${config.prefix}rank <RSN>`, `Shows the points for members of the IronScape clan. Only available in <#421765570178973697>`)
 
 			message.channel.send(output)
 			return
@@ -291,8 +292,11 @@ module.exports = (message, cmd, args) => {
 			ccApps.verify(message,cmd, args)
 			return
 		}
-		case 'ironscapelookup':{
-			//message.channel.send("Test complete")
+		case 'rank':{
+			if (message.channel.id != '421765570178973697') {
+				message.channel.send(`This command is only available in <#421765570178973697>`)
+				return
+			}
 			ironscapeClan.ironscapelookup(message,cmd,args)
 			return
 		}
