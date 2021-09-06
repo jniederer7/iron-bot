@@ -300,6 +300,14 @@ module.exports = (message, cmd, args) => {
 			ironscapeClan.ironscapelookup(message,cmd,args)
 			return
 		}
+		case 'tasks':{
+			if (message.channel.id != '421765570178973697') {
+				message.channel.send(`This command is only available in <#421765570178973697>`)
+				return
+			}
+			ironscapeClan.ironscapeTasks(message,cmd,args)
+			return
+		}
 		default: {
 			message.channel.send(`${message.member} I don't know that command. Try \`$help\`.`)
 			return
