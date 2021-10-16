@@ -272,7 +272,7 @@ module.exports = (message, cmd, args) => {
 			pbFunctions.addPB(message,args)
 			return
 	
-}
+		}
 		case "deletepb":{
 			pbFunctions.deletePB(message,args)
 			return

@@ -359,24 +359,23 @@ async function getHighscoreTasks(username,completeEasyHsTasks,incompleteEasyHsTa
         const defenseSkill = playerData[Category.DEFENCE]
         const rangeSkill = playerData[Category.RANGED]
         const mageSkill = playerData[Category.MAGIC]
-        const prayerSkill = playerData[Category.PRAYER]
         if(attackSkill.level >= 99 && strengthSkill.level >= 99 && defenseSkill.level >= 99 &&
-            rangeSkill.level >= 99 && mageSkill.level >= 99 && prayerSkill.level >= 99){
+            rangeSkill.level >= 99 && mageSkill.level >= 99){
             completeMediumHsTasks.push("Maxed Combat")
         }
         else{
-            incompleteMediumHsTasks.push("Maxed Combat (99 attack, strength, defence, range, magic, prayer)")
+            incompleteMediumHsTasks.push("Maxed Combat (99 attack, strength, defence, range, magic)")
         }
 
-        //Maxed resource skills, 99 woodcutting, fishing, farming, mining, herblore
-        const woodcutSkill = playerData[Category.WOODCUTTING]
+        //First 99s
+        const firemakingSkill = playerData[Category.FIREMAKING]
         const fishingSkill = playerData[Category.FISHING]
-        const miningSkill = playerData[Category.MINING]
-        if(woodcutSkill.level >= 99 && fishingSkill.level >= 99 && miningSkill.level >= 99 && farmingSkill.level >= 99 && herbloreSkill.level >= 99){
-            completeMediumHsTasks.push("Max Resource Skills,")
+        const thievingSkill = playerData[Category.THIEVING]
+        if(firemakingSkill.level >= 99 && fishingSkill.level >= 99 && farmingSkill.level >= 99 && thievingSkill.level >= 99){
+            completeMediumHsTasks.push("First 99s,")
         }
         else{
-            incompleteMediumHsTasks.push("Max Resource Skills (Woodcutting, fishing, mining, farming, herblore)")
+            incompleteMediumHsTasks.push("First 99s (99 Firemaking, Thieving, Farming, Fishing)")
         }
 
         //HARD TIER
@@ -410,31 +409,34 @@ async function getHighscoreTasks(username,completeEasyHsTasks,incompleteEasyHsTa
             completeHardHsTasks.push("Ranked on all PVM Encounters")
         }
 
-        //Max Character Development
+        //Max Gatherers
+        const runecraftSkill = playerData[Category.RUNECRAFT]
         const agilitySkill = playerData[Category.AGILITY]
-        const hunterSkill = playerData[Category.HUNTER]
         const slayerSkill = playerData[Category.SLAYER]
-        const thievingSkill = playerData[Category.THIEVING]
-        if(agilitySkill.level >= 99 && hunterSkill.level >= 99 && slayerSkill.level >= 99 && thievingSkill.level >= 99 && prayerSkill.level >= 99){
-            completeHardHsTasks.push("Max Character Development")
+        const hunterSkill = playerData[Category.HUNTER]
+        const miningSkill = playerData[Category.MINING]
+        const woodcuttingSkill = playerData[Category.WOODCUTTING]
+        if(runecraftSkill.level >= 99 && agilitySkill.level >= 99 && slayerSkill.level >= 99 && hunterSkill.level >= 99 && miningSkill.level >= 99
+            && woodcuttingSkill.level >= 99){
+            completeHardHsTasks.push("Max Gatherers")
         }
         else{
-            incompleteHardHsTasks.push("Max Character Development (Agility, hunter, slayer, thieving, prayer)")
+            incompleteHardHsTasks.push("Max Gatherers (99 RC, Agility, Slayer, Hunter, Mining, Woodcutting)")
         }
 
-        //Max Production Skills
-        const smithingSkill = playerData[Category.SMITHING]
-        const craftingSkill = playerData[Category.CRAFTING]
+        //Max Consumables
+        const prayerSkill = playerData[Category.PRAYER]
         const fletchingSkill = playerData[Category.FLETCHING]
-        const runecraftSkill = playerData[Category.RUNECRAFT]
+        const craftingSkill = playerData[Category.CRAFTING]
+        const smithingSkill = playerData[Category.SMITHING]
         const cookingSkill = playerData[Category.COOKING]
-        const firemakingSkill = playerData[Category.FIREMAKING]
-        if(smithingSkill.level >= 99 && craftingSkill.level >= 99 && fletchingSkill.level >= 99 && runecraftSkill.level >= 99 &&
-            cookingSkill.level >= 99 && firemakingSkill.level >= 99 && constructionSkill.level >= 99){
-            completeHardHsTasks.push("Max Production Skills")
+        if(prayerSkill.level >= 99 && constructionSkill.level >= 99 && herbloreSkill.level >= 99 && fletchingSkill.level >= 99 &&
+            craftingSkill.level >= 99 && smithingSkill.level >= 99 && cookingSkill.level >= 99){
+            completeHardHsTasks.push("Max Consumables")
+            console.log("Getting to max consumables")
         }
         else{
-            incompleteHardHsTasks.push("Max Production Skills (Smithing, crafting, fletching, runecrafting, cooking, firemaking, construction)")
+            incompleteHardHsTasks.push("Max Consumables (99 Prayer, Construction, Herblore, Fletching, Crafting, Smithing, Cooking)")
         }
 
         //ELITE TASKS
