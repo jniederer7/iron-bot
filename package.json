@@ -12,7 +12,7 @@
   "author": "RNGBandit",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "canvas": "^2.8.0",
     "discord.js": "^12.4.1",
     "dotenv": "^8.2.0",
