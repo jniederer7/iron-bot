@@ -71,7 +71,7 @@ async function fetchIronscapeSheet() {
     
     await doc.loadInfo(); 
     const sheet = doc.sheetsByTitle['Members'];
-    const rows = await sheet.getRows({offset: 1, limit: 500});
+    const rows = await sheet.getRows({offset: 1, limit: 1000});
     // Ignore header row and limit to first 500 rows after that
     for (var i = rows.length - 1; i >= 0; i--) {
         const row = rows[i];
