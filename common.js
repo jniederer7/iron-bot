@@ -53,7 +53,7 @@ updateUsersHiscoreData = (keys, client) => {
 
 		let specialIronmanFlag = false
 		const innerLoop = (i) => {
-			client.setTimeout(() => {
+			setTimeout(() => {
 				if (i > keys.length) {
 					i = keys.length - 1
 					specialIronmanFlag = false

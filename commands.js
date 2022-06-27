@@ -176,12 +176,12 @@ module.exports = (message, cmd, args) => {
 
 			// Create a hiscore-like imageBuffer
 			const buffer = ImageWriter.generateHiscoreImage(hiscoreData, endpoint, category)
-
-			const output = pbFunctions.createEmbed()
+			const image = new Discord.MessageAttachment(buffer, 'file.png')
+			const output = new Discord.MessageEmbed()
+				.setColor('#E74C3C')
 				.setTimestamp()
-				.attachFiles([{name: "image.png", attachment: buffer}])
-				.setImage('attachment://image.png')
-			message.channel.send(output)			
+				.setImage('attachment://file.png')
+			message.channel.send({ embeds: [output], files: [image] })			
 			return
 		}
 		case "whois": {
@@ -254,7 +254,7 @@ module.exports = (message, cmd, args) => {
 				.addField(`${config.prefix}deletepb <boss/all>`, `Deletes a specific boss entry from the database or all entries tied to your account`)
 				.addField(`${config.prefix}rank <RSN>`, `Shows the points for members of the IronScape clan. Only available in <#421765570178973697>`)
 
-			message.channel.send(output)
+			message.channel.send({embeds:[output]})
 			return
 		}
 		case 'pb':{

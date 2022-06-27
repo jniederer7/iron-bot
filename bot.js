@@ -1,8 +1,11 @@
-const Discord = require('discord.js')
+const { Client, Intents } = require('discord.js')
 const config = require("./config")
 const commands = require("./commands")
 const { usersDb, hiscoresDb, removeDeprecatedUserData, updateUsersHiscoreData, timedQueue, logger } = require('./common')
 const pbFunction = require("./pb/pbCommands.js")
+const Discord = require('discord.js')
+const { token } = require('./config')
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
   
 let updatingHiscores = false
 function updateHiscoreData() {
@@ -60,21 +63,21 @@ function processTimedQueue() {
 }
 
 // Initialize Discord Bot
-const client = new Discord.Client()
+// const client = new Client({intents: intents})
 client.on('ready', function (evt) {
 	logger.info(`Logged in as: ${client.user.tag} - (${client.user})`)
 
 	// Call methods to run on startup as `setInterval` waits the specified delay before invoking them
 	updateHiscoreData() 
-	client.setInterval(updateHiscoreData, 12 * 60 * 60 * 1000) // Every 12 hours seconds attempt to update hiscore data
+	setInterval(updateHiscoreData, 12 * 60 * 60 * 1000) // Every 12 hours seconds attempt to update hiscore data
 
 	removeDeprecatedUsersHiscoreData()
-	client.setInterval(removeDeprecatedUsersHiscoreData, 60 * 60 * 1000) // Every hour
+	setInterval(removeDeprecatedUsersHiscoreData, 60 * 60 * 1000) // Every hour
 
 	processTimedQueue() 
-	client.setInterval(processTimedQueue, 10 * 1000) // Every 10 seconds
+	setInterval(processTimedQueue, 10 * 1000) // Every 10 seconds
 	// Queries database to prevent connection from timing out
-	client.setInterval(pbFunction.sqlQuery, 60 * 60 * 1000) //Every hour
+	setInterval(pbFunction.sqlQuery, 60 * 60 * 1000) //Every hour
 })
 
 client.on('message', message => {
@@ -119,3 +122,4 @@ client.on("guildMemberAdd", member => {
 		console.log("Sus Account Joined: " + member.displayName + " " + timestamp);
 	}
 })
+

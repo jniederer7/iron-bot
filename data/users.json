@@ -516,11 +516,11 @@
         "endpoint": "IRONMAN"
     },
     "479947556185571331": {
-        "name": "NidaNewName",
-        "endpoint": "IRONMAN"
+        "name": "Spare Text",
+        "endpoint": "HARDCORE_IRONMAN"
     },
     "133777400340152321": {
-        "name": "auronzwei",
+        "name": "AuronCSC",
         "endpoint": "IRONMAN"
     },
     "226908520916844555": {
@@ -916,7 +916,7 @@
         "endpoint": "ULTIMATE_IRONMAN"
     },
     "731090651223031838": {
-        "name": "bayes rule",
+        "name": "dkho",
         "endpoint": "IRONMAN"
     },
     "547385954051162112": {
@@ -1069,10 +1069,6 @@
     },
     "543357661941334027": {
         "name": "SoloShow",
-        "endpoint": "IRONMAN"
-    },
-    "155705043520192512": {
-        "name": "slowdive btw",
         "endpoint": "IRONMAN"
     },
     "179346015411896320": {
@@ -1384,7 +1380,7 @@
         "endpoint": "IRONMAN"
     },
     "514594211581132800": {
-        "name": "GodHolaf",
+        "name": "God Holaf",
         "endpoint": "HARDCORE_IRONMAN"
     },
     "443124423545978882": {
@@ -1402,10 +1398,6 @@
     "547064874165862437": {
         "name": "geel2",
         "endpoint": "IRONMAN"
-    },
-    "452482641665720320": {
-        "name": "Tiny Bart",
-        "endpoint": "HARDCORE_IRONMAN"
     },
     "302019650441576448": {
         "name": "medictbh",
@@ -1472,7 +1464,7 @@
         "endpoint": "IRONMAN"
     },
     "749058549023244430": {
-        "name": "Lyra uwu",
+        "name": "Elise uwu",
         "endpoint": "HARDCORE_IRONMAN"
     },
     "110425446822223872": {
@@ -1496,7 +1488,7 @@
         "endpoint": "IRONMAN"
     },
     "319590871144333313": {
-        "name": "dona lurdes",
+        "name": "Loez",
         "endpoint": "IRONMAN"
     },
     "210273657845448704": {
@@ -1568,11 +1560,11 @@
         "endpoint": "HARDCORE_IRONMAN"
     },
     "665393199618981888": {
-        "name": "Gene Gray",
+        "name": "Bits",
         "endpoint": "IRONMAN"
     },
     "370381649990385674": {
-        "name": "cosineeee",
+        "name": "123dweiofjeg",
         "endpoint": "IRONMAN"
     },
     "222262995504332800": {
@@ -1604,7 +1596,7 @@
         "endpoint": "IRONMAN"
     },
     "357172392860188672": {
-        "name": "Do You Ever",
+        "name": "Jamwa",
         "endpoint": "IRONMAN"
     },
     "310804954292027392": {
@@ -1708,7 +1700,7 @@
         "endpoint": "HARDCORE_IRONMAN"
     },
     "176760371539869696": {
-        "name": "Goose World",
+        "name": "goose world",
         "endpoint": "IRONMAN"
     },
     "155181645505363968": {
@@ -1833,6 +1825,246 @@
     },
     "326826963907903488": {
         "name": "Clippp",
+        "endpoint": "IRONMAN"
+    },
+    "367097565289644034": {
+        "name": "Microlending",
+        "endpoint": "IRONMAN"
+    },
+    "322471446859481099": {
+        "name": "Tryptameme",
+        "endpoint": "IRONMAN"
+    },
+    "293455100674834442": {
+        "name": "hoofi",
+        "endpoint": "ULTIMATE_IRONMAN"
+    },
+    "437088926763581440": {
+        "name": "ImTreason",
+        "endpoint": "IRONMAN"
+    },
+    "802652286060855317": {
+        "name": "asap rocky",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "151028020017233920": {
+        "name": "Casualties",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "433976686988754945": {
+        "name": "kottipizza",
+        "endpoint": "IRONMAN"
+    },
+    "636748413987323914": {
+        "name": "JoshWhiteBoy",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "722823248248569998": {
+        "name": "Jane",
+        "endpoint": "IRONMAN"
+    },
+    "519320482491793408": {
+        "name": "worm potato",
+        "endpoint": "IRONMAN"
+    },
+    "188003325202006016": {
+        "name": "alberto p",
+        "endpoint": "IRONMAN"
+    },
+    "531162386774753280": {
+        "name": "Screw Galvek",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "265141742586691584": {
+        "name": "HC Nitsy",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "98899055991611392": {
+        "name": "goose toob",
+        "endpoint": "IRONMAN"
+    },
+    "304029271066804224": {
+        "name": "iron jal-nib",
+        "endpoint": "IRONMAN"
+    },
+    "302209348736778240": {
+        "name": "WlLL MM",
+        "endpoint": "IRONMAN"
+    },
+    "359008870183731201": {
+        "name": "7alented",
+        "endpoint": "IRONMAN"
+    },
+    "629791185858461717": {
+        "name": "26th st",
+        "endpoint": "IRONMAN"
+    },
+    "338297122866724864": {
+        "name": "LuckyRobOne",
+        "endpoint": "IRONMAN"
+    },
+    "585381872054566922": {
+        "name": "The Wookiee",
+        "endpoint": "IRONMAN"
+    },
+    "631068781304610827": {
+        "name": "huray potah",
+        "endpoint": "IRONMAN"
+    },
+    "689201612123537556": {
+        "name": "inqmebb",
+        "endpoint": "IRONMAN"
+    },
+    "406992970265657345": {
+        "name": "czzz",
+        "endpoint": "IRONMAN"
+    },
+    "155705043520192512": {
+        "name": "slowdive mbv",
+        "endpoint": "IRONMAN"
+    },
+    "609211023995437077": {
+        "name": "help me rng",
+        "endpoint": "IRONMAN"
+    },
+    "290160015690432513": {
+        "name": "monorail67",
+        "endpoint": "IRONMAN"
+    },
+    "169824120966610944": {
+        "name": "piere128",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "499010579898302469": {
+        "name": "Witch Aileen",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "587733853045522449": {
+        "name": "Dasco",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "212692614170804225": {
+        "name": "Xushaofa",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "364157858935209994": {
+        "name": "M ov",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "150795318370238465": {
+        "name": "Cozy",
+        "endpoint": "ULTIMATE_IRONMAN"
+    },
+    "889196076068917258": {
+        "name": "salii",
+        "endpoint": "IRONMAN"
+    },
+    "155673415787741184": {
+        "name": "El Doobie",
+        "endpoint": "IRONMAN"
+    },
+    "138788365053984768": {
+        "name": "Zilyana HC",
+        "endpoint": "IRONMAN"
+    },
+    "339172760322441216": {
+        "name": "K18",
+        "endpoint": "IRONMAN"
+    },
+    "452482641665720320": {
+        "name": "suiter",
+        "endpoint": "IRONMAN"
+    },
+    "183071289680855040": {
+        "name": "bde reflow",
+        "endpoint": "IRONMAN"
+    },
+    "220642859773198336": {
+        "name": "j-mes",
+        "endpoint": "ULTIMATE_IRONMAN"
+    },
+    "346738168927879175": {
+        "name": "Lattialista",
+        "endpoint": "IRONMAN"
+    },
+    "324245449504587776": {
+        "name": "shin unburnt",
+        "endpoint": "IRONMAN"
+    },
+    "838531462339887104": {
+        "name": "esteem",
+        "endpoint": "IRONMAN"
+    },
+    "184075939464871936": {
+        "name": "Morbing Ming",
+        "endpoint": "IRONMAN"
+    },
+    "86273219153133568": {
+        "name": "Bolinbear",
+        "endpoint": "IRONMAN"
+    },
+    "581222962510823434": {
+        "name": "fat maori",
+        "endpoint": "IRONMAN"
+    },
+    "712741405931602003": {
+        "name": "WomenCrusher",
+        "endpoint": "IRONMAN"
+    },
+    "286445015696277505": {
+        "name": "me no woman",
+        "endpoint": "IRONMAN"
+    },
+    "487684644997824519": {
+        "name": "ru-ne",
+        "endpoint": "IRONMAN"
+    },
+    "773446432878624768": {
+        "name": "IronCG",
+        "endpoint": "IRONMAN"
+    },
+    "101144445981847552": {
+        "name": "ironkrabs",
+        "endpoint": "IRONMAN"
+    },
+    "238427394371747851": {
+        "name": "Iron L J",
+        "endpoint": "IRONMAN"
+    },
+    "570032938172022818": {
+        "name": "E ri k",
+        "endpoint": "IRONMAN"
+    },
+    "214620393842016256": {
+        "name": "horn tugger",
+        "endpoint": "IRONMAN"
+    },
+    "361284847764897792": {
+        "name": "Marcie247",
+        "endpoint": "IRONMAN"
+    },
+    "558813946451066899": {
+        "name": "ll LUFC ll",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "631385669322932235": {
+        "name": "Rox i",
+        "endpoint": "IRONMAN"
+    },
+    "531572260763336704": {
+        "name": "Darkvein",
+        "endpoint": "IRONMAN"
+    },
+    "368618985853550593": {
+        "name": "ripend",
+        "endpoint": "IRONMAN"
+    },
+    "309155048896724992": {
+        "name": "e i d",
+        "endpoint": "IRONMAN"
+    },
+    "673984626515247124": {
+        "name": "Reporting U",
         "endpoint": "IRONMAN"
     }
 }

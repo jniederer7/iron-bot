@@ -47,7 +47,7 @@ function pb(message, args) {
 				if (err) throw err
                 
 				
-				output = createEmbed()
+				output = new Discord.MessageEmbed()
 				.setTitle(`${boss} Personal Bests`)
 				.setDescription(`Kill Time is H:MM:SS.s `)
                     //global discord emojis
@@ -102,7 +102,7 @@ function pb(message, args) {
 							{name: 'Date', value: `${pbValue}`, inline: true},
 							{name: 'Image Link', value: `${imageValue}`, inline: true}
 							)					
-					message.channel.send(output)
+					message.channel.send({embeds: [output]})
 			})
 			return
 }
@@ -110,7 +110,7 @@ function pb(message, args) {
 function myPBs(message) {
     //Discord ID of the user who used the command
     const User = message.member.id
-    output = createEmbed()
+    output = new Discord.MessageEmbed()
         .setTitle(`Overall IronScape Rankings`)
         .setDescription(`All PB's for <@${User}>`)
             let bossValue = ``
@@ -122,7 +122,7 @@ function myPBs(message) {
          if (err) throw err
         if (res[0] == undefined){
             output = `no bosses in database`
-            message.channel.send(output)
+            message.channel.send({embeds: [output]})
             return
         }
         //sets bossArray to the first result as baseline to match against
@@ -159,7 +159,7 @@ function myPBs(message) {
             {name: 'Kill Time', value:`${killTime}`, inline: true},
         
             )
-            message.channel.send(output)
+            message.channel.send({embeds: [output]})
         }
         else{
             output = `You do not have any pb's stored in the database <@${User}>`
