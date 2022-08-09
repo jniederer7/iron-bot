@@ -9,9 +9,9 @@ const { Endpoints, getEndpointByShortName } = require('../hiscores/endpoints')
 
 const easyTaskList = ['Firecape',
     'RFD Complete',
-    'Full Graceful',
-    'Beserker ring',
-    'All Medium diaries done',
+    'Easy Combat Tasks',
+    'Beserker Ring',
+    'All Medium Diaries done',
     'Imbued Slayer Helm',
     '5 Skilling outfits (All experience boosting outfits including rogues and graceful)',
     'Ranger boots or complete god book',
@@ -24,22 +24,27 @@ const mediumTaskList = ['Quest Cape',
     'Ava\'s assembler',
     'Any zenyte jewelery',
     'All hard diaries done',
-    'Ring of endurance',
-    'Obtain any visage (Draconic; Skeletal; Wyvern)']
+    '1000 Farming Contracts',
+    'Medium Combat Tasks',
+    '500 Collection Log Slots',
+    'Dragon Pickaxe obtained']
 const hardTaskList = ['Diary Cape',
     'Infernal Cape',
     '10 Pets',
     'ToB unique',
-    'Nightmare unique',
+    'Nightmare or Nex unique',
     'Zulrah complete (Tanzanite Fang and Magic Fang and Serpentine Visage)',
     'Dragon hunter lance',
     'Enhanced crystal weapon seed or crystal tool seed',
-    '2000 Farming contracts',
+    'Ring of Endurance',
+    'Hard and Elite Combat Tasks',
+    'ToA Unique',
     'Champions cape']
-const eliteTaskList = ['ToB Master (1k Tob kc or item completion w/ pet)',
+const eliteTaskList = ['Master Combat Tasks',
+    'ToB Master (1k Tob kc or item completion w/ pet)',
     'CoX Master (1k CoX kc or item completion w/ pet)',
-    '3k NM kc, 2k Phosanis NM kc, or full armor set',
-    'Corp sigil set',
+    'ToA Master (All uniques and pet)',
+    '1000 Collection Log Slots',
     '20 pets',
     'All GWD uniques complete']
 
@@ -63,7 +68,7 @@ async function fetchIronscapeSheet() {
 
     // Request google sheet
     const doc = new GoogleSpreadsheet('1QNBJ-bYt5lTGLrOioo80Lha330TfxqW1HgbffpkgSPk'); //Main spreadsheet
-    //const doc = new GoogleSpreadsheet('1bzcpOaVU1J8QFMxyqn5K5A-DnZP5tunjvUgF54Z3R1E'); //Test spreadsheet
+    //const doc = new GoogleSpreadsheet('1yvoCZc0fhdr9IxSZdDQQXmpL0n8b2mcNPfBl1IldVJY'); //Test spreadsheet
     await doc.useServiceAccountAuth({
         client_email: creds.client_email,
         private_key: creds.private_key,
@@ -353,38 +358,13 @@ async function getHighscoreTasks(username,completeEasyHsTasks,incompleteEasyHsTa
             incompleteMediumHsTasks.push("Max POH Pool")
         }
 
-        //Maxed combat 99 att, str, def, range, mage, prayer
-        const attackSkill = playerData[Category.ATTACK]
-        const strengthSkill = playerData[Category.STRENGTH]
-        const defenseSkill = playerData[Category.DEFENCE]
-        const rangeSkill = playerData[Category.RANGED]
-        const mageSkill = playerData[Category.MAGIC]
-        if(attackSkill.level >= 99 && strengthSkill.level >= 99 && defenseSkill.level >= 99 &&
-            rangeSkill.level >= 99 && mageSkill.level >= 99){
-            completeMediumHsTasks.push("Maxed Combat")
-        }
-        else{
-            incompleteMediumHsTasks.push("Maxed Combat (99 attack, strength, defence, range, magic)")
-        }
-
-        //First 99s
-        const firemakingSkill = playerData[Category.FIREMAKING]
-        const fishingSkill = playerData[Category.FISHING]
-        const thievingSkill = playerData[Category.THIEVING]
-        if(firemakingSkill.level >= 99 && fishingSkill.level >= 99 && farmingSkill.level >= 99 && thievingSkill.level >= 99){
-            completeMediumHsTasks.push("First 99s,")
-        }
-        else{
-            incompleteMediumHsTasks.push("First 99s (99 Firemaking, Thieving, Farming, Fishing)")
-        }
-
         //HARD TIER
-        //2,277 Total
-        if(overallHiscoreResult.level >= 2277){
-            completeHardHsTasks.push("2,277 Total")
+        //2,200 Total
+        if(overallHiscoreResult.level >= 2200){
+            completeHardHsTasks.push("2,200 Total")
         }
         else{
-            incompleteHardHsTasks.push("2,277 Total")
+            incompleteHardHsTasks.push("2,200 Total")
         }
 
         //1,000 Clues
@@ -395,90 +375,14 @@ async function getHighscoreTasks(username,completeEasyHsTasks,incompleteEasyHsTa
             incompleteHardHsTasks.push("1,000 Clues")
         }
 
-        //Ranked on all PVM Encounters
-        let allBossKC = true
-        for(var i = 36; i <= 82; i++){
-            const bossKC = playerData[categories[i]]
-            if(bossKC.level < 1){
-                incompleteHardHsTasks.push("Ranked on all PVM Encounters")
-                allBossKC = false
-                break
-            } 
-        }
-        if(allBossKC){
-            completeHardHsTasks.push("Ranked on all PVM Encounters")
-        }
-
-        //Max Gatherers
-        const runecraftSkill = playerData[Category.RUNECRAFT]
-        const agilitySkill = playerData[Category.AGILITY]
-        const slayerSkill = playerData[Category.SLAYER]
-        const hunterSkill = playerData[Category.HUNTER]
-        const miningSkill = playerData[Category.MINING]
-        const woodcuttingSkill = playerData[Category.WOODCUTTING]
-        if(runecraftSkill.level >= 99 && agilitySkill.level >= 99 && slayerSkill.level >= 99 && hunterSkill.level >= 99 && miningSkill.level >= 99
-            && woodcuttingSkill.level >= 99){
-            completeHardHsTasks.push("Max Gatherers")
-        }
-        else{
-            incompleteHardHsTasks.push("Max Gatherers (99 RC, Agility, Slayer, Hunter, Mining, Woodcutting)")
-        }
-
-        //Max Consumables
-        const prayerSkill = playerData[Category.PRAYER]
-        const fletchingSkill = playerData[Category.FLETCHING]
-        const craftingSkill = playerData[Category.CRAFTING]
-        const smithingSkill = playerData[Category.SMITHING]
-        const cookingSkill = playerData[Category.COOKING]
-        if(prayerSkill.level >= 99 && constructionSkill.level >= 99 && herbloreSkill.level >= 99 && fletchingSkill.level >= 99 &&
-            craftingSkill.level >= 99 && smithingSkill.level >= 99 && cookingSkill.level >= 99){
-            completeHardHsTasks.push("Max Consumables")
-            console.log("Getting to max consumables")
-        }
-        else{
-            incompleteHardHsTasks.push("Max Consumables (99 Prayer, Construction, Herblore, Fletching, Crafting, Smithing, Cooking)")
-        }
-
         //ELITE TASKS
-        //1B Total Exp, or 20M Base Exp
-        let totalXP1bil = false
-        let baseXP20mil = true
-        if(overallHiscoreResult.exp >= 1000000000){
-            totalXP1bil = true
-        }
-
-        for(var i = 1; i <= 23; i++){
-            const skill = playerData[categories[i]]
-            if(skill.exp < 20000000){
-                baseXP20mil = false
-                break
-            } 
-        }
-
-        if( totalXP1bil || baseXP20mil){
-            completeEliteHsTasks.push("1B Total Exp, or 20M Base Exp")
+        //2277 Total
+        if(overallHiscoreResult.level >= 2277){
+            completeEliteHsTasks.push("2,277 Total")
         }
         else{
-            incompleteEliteHsTasks.push("1B Total Exp, or 20M Base Exp")
+            incompleteEliteHsTasks.push("2,277 Total")
         }
-
-        //200M in a Skill
-        let skill200m = false
-        for(var i = 1; i <= 23; i++){
-            const skill = playerData[categories[i]]
-            if(skill.exp >= 200000000){
-                skill200m = true
-                break
-            } 
-        }
-
-        if(skill200m){
-            completeEliteHsTasks.push("200M in a Skill")
-        }
-        else{
-            incompleteEliteHsTasks.push("200M in a Skill")
-        }
-
         //All clue milestones
         const beginnerClues = playerData[Category.CLUE_SCROLL_BEGINNER]
         const easyClues = playerData[Category.CLUE_SCROLL_MEDIUM]
