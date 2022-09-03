@@ -34,6 +34,7 @@ const categories = [
 	"Clue scroll (elite)",
 	"Clue scroll (master)",
 	"Last man standing",
+	"PvP Arena",
 	"Soul wars zeal",
 	"Guardians of the Rift",
 	"Abyssal Sire",
@@ -76,6 +77,8 @@ const categories = [
 	"Theatre of blood",
 	"Theatre of blood hard mode",
 	"Thermonuclear smoke devil",
+	"Tombs of Amascut",
+	"Tombs of Amascut: Expert Mode",
 	"Tz-kal-zuk",
 	"Tz-tok-jad",
 	"Venenatis",
@@ -122,56 +125,59 @@ const Category = {
 	CLUE_SCROLL_ELITE: categories[32],
 	CLUE_SCROLL_MASTER: categories[33],
 	LAST_MAN_STANDING: categories[34],
-	SOUL_WARS_ZEAL: categories[35],
-	GUARDIANS_OF_THE_RIFT: categories[36],
-	ABYSSAL_SIRE: categories[37],
-	ALCHEMICAL_HYDRA: categories[38],
-	BARROWS_CHESTS: categories[39],
-	BRYOPHYTA: categories[40],
-	CALLISTO: categories[41],
-	CERBERUS: categories[42],
-	CHAMBERS_OF_XERIC: categories[43],
-	CHAMBERS_OF_XERIC_CHALLENGE_MODE: categories[44],
-	CHAOS_ELEMENTAL: categories[45],
-	CHAOS_FANATIC: categories[46],
-	COMMANDER_ZILYANA: categories[47],
-	CORPOREAL_BEAST: categories[48],
-	CRAZY_ARCHAEOLOGIST: categories[49],
-	DAGANNOTH_PRIME: categories[50],
-	DAGANNOTH_REX: categories[51],
-	DAGANNOTH_SUPREME: categories[52],
-	DERANGED_ARCHAEOLOGIST: categories[53],
-	GENERAL_GRAARDOR: categories[54],
-	GIANT_MOLE: categories[55],
-	GROTESQUE_GUARDIANS: categories[56],
-	HESPORI: categories[57],
-	KALPHITE_QUEEN: categories[58],
-	KING_BLACK_DRAGON: categories[59],
-	KRAKEN: categories[60],
-	KREEARRA: categories[61],
-	KRIL_TSUTSAROTH: categories[62],
-	MIMIC: categories[63],
-	NEX: categories[64],
-	NIGHTMARE: categories[65],
-	PHOSANIS_NIGHTMARE: categories[66],
-	OBOR: categories[67],
-	SARACHNIS: categories[68],
-	SCORPIA: categories[69],
-	SKOTIZO: categories[70],
-	TEMPOROSS: categories[71],
-	GAUNTLET: categories[72],
-	CORRUPTED_GAUNTLET: categories[73],
-	THEATRE_OF_BLOOD: categories[74],
-	THEATRE_OF_BLOOD_HARD_MODE: categories[75],
-	THERMONUCLEAR_SMOKE_DEVIL: categories[76],
-	TZ_KAL_ZUK: categories[77],
-	TZ_TOK_JAD: categories[78],
-	VENENATIS: categories[79],
-	VETION: categories[80],
-	VORKATH: categories[81],
-	WINTERTODT: categories[82],
-	ZALCANO: categories[83],
-	ZULRAH: categories[84],
+	PVP_ARENA: categories[35],
+	SOUL_WARS_ZEAL: categories[36],
+	GUARDIANS_OF_THE_RIFT: categories[37],
+	ABYSSAL_SIRE: categories[38],
+	ALCHEMICAL_HYDRA: categories[39],
+	BARROWS_CHESTS: categories[40],
+	BRYOPHYTA: categories[41],
+	CALLISTO: categories[42],
+	CERBERUS: categories[43],
+	CHAMBERS_OF_XERIC: categories[44],
+	CHAMBERS_OF_XERIC_CHALLENGE_MODE: categories[45],
+	CHAOS_ELEMENTAL: categories[46],
+	CHAOS_FANATIC: categories[47],
+	COMMANDER_ZILYANA: categories[48],
+	CORPOREAL_BEAST: categories[49],
+	CRAZY_ARCHAEOLOGIST: categories[50],
+	DAGANNOTH_PRIME: categories[51],
+	DAGANNOTH_REX: categories[52],
+	DAGANNOTH_SUPREME: categories[53],
+	DERANGED_ARCHAEOLOGIST: categories[54],
+	GENERAL_GRAARDOR: categories[55],
+	GIANT_MOLE: categories[56],
+	GROTESQUE_GUARDIANS: categories[57],
+	HESPORI: categories[58],
+	KALPHITE_QUEEN: categories[59],
+	KING_BLACK_DRAGON: categories[60],
+	KRAKEN: categories[61],
+	KREEARRA: categories[62],
+	KRIL_TSUTSAROTH: categories[63],
+	MIMIC: categories[64],
+	NEX: categories[65],
+	NIGHTMARE: categories[66],
+	PHOSANIS_NIGHTMARE: categories[67],
+	OBOR: categories[68],
+	SARACHNIS: categories[69],
+	SCORPIA: categories[70],
+	SKOTIZO: categories[71],
+	TEMPOROSS: categories[72],
+	GAUNTLET: categories[73],
+	CORRUPTED_GAUNTLET: categories[74],
+	THEATRE_OF_BLOOD: categories[75],
+	THEATRE_OF_BLOOD_HARD_MODE: categories[76],
+	THERMONUCLEAR_SMOKE_DEVIL: categories[77],
+	TOMBS_OF_AMASCUT: categories[78],
+	TOMBS_OF_AMASCUT_EXPERT_MODE: categories[79],
+	TZ_KAL_ZUK: categories[80],
+	TZ_TOK_JAD: categories[81],
+	VENENATIS: categories[82],
+	VETION: categories[83],
+	VORKATH: categories[84],
+	WINTERTODT: categories[84],
+	ZALCANO: categories[85],
+	ZULRAH: categories[86],
 }
 
 getCategoryByShortName = (name) => {
@@ -283,6 +289,12 @@ getCategoryByShortName = (name) => {
 			return "Clue scroll (master)"
 		case "lms":
 			return "Last man standing"
+		case "pvp":
+		case "emir":
+		case "ea":
+		case "emir arena":	
+		case "emirs arena":
+			return "PvP Arena"
 		case "sire":
 			return "Abyssal Sire"
 		case "sw":
@@ -427,6 +439,21 @@ getCategoryByShortName = (name) => {
 			return "Theatre of blood hard mode"
 		case "thermy":
 			return "Thermonuclear smoke devil"
+		case "toa":
+		case "raids3":
+		case "raids 3":
+		case "toa normal":
+		case "toa normal mode":
+			return "Tombs of amascut"
+		case "toa hm":
+		case "hm toa":
+		case "toa expert":
+		case "expert toa":
+		case "toa expert mode":
+		case "expert mode toa":
+		case "toa hard":
+		case "hard toa":
+			return "Tombs of amascut: expert mode"
 		case "zuk":
 		case "inferno":
 			return "Tz-kal-zuk"
@@ -462,6 +489,7 @@ function capitalize(string) {
 	if (string.length <= 1) {
 		return string.toUpperCase();
 	}
+	
 
 	return string.substring(0, 1).toUpperCase() + string.substring(1)
 }

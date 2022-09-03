@@ -20,7 +20,7 @@
         "endpoint": "HARDCORE_IRONMAN"
     },
     "166945243437072384": {
-        "name": "fish",
+        "name": "Fishling",
         "endpoint": "IRONMAN"
     },
     "107550117673844736": {
@@ -348,7 +348,7 @@
         "endpoint": "IRONMAN"
     },
     "314923368367521792": {
-        "name": "Couchletics",
+        "name": "myname borat",
         "endpoint": "IRONMAN"
     },
     "237299072837353472": {
@@ -516,8 +516,8 @@
         "endpoint": "IRONMAN"
     },
     "479947556185571331": {
-        "name": "Spare Text",
-        "endpoint": "HARDCORE_IRONMAN"
+        "name": "Bilfred",
+        "endpoint": "IRONMAN"
     },
     "133777400340152321": {
         "name": "AuronCSC",
@@ -920,7 +920,7 @@
         "endpoint": "IRONMAN"
     },
     "547385954051162112": {
-        "name": "General Mac",
+        "name": "Eruvalar",
         "endpoint": "IRONMAN"
     },
     "174558262463561728": {
@@ -1908,7 +1908,7 @@
         "endpoint": "IRONMAN"
     },
     "631068781304610827": {
-        "name": "huray potah",
+        "name": "7 sprong",
         "endpoint": "IRONMAN"
     },
     "689201612123537556": {
@@ -1996,7 +1996,7 @@
         "endpoint": "IRONMAN"
     },
     "184075939464871936": {
-        "name": "Morbing Ming",
+        "name": "Scuffed Ming",
         "endpoint": "IRONMAN"
     },
     "86273219153133568": {
@@ -2065,6 +2065,102 @@
     },
     "673984626515247124": {
         "name": "Reporting U",
+        "endpoint": "IRONMAN"
+    },
+    "388455709043326978": {
+        "name": "ripbankspace",
+        "endpoint": "ULTIMATE_IRONMAN"
+    },
+    "405893262856159252": {
+        "name": "callusanoobs",
+        "endpoint": "IRONMAN"
+    },
+    "144297434011533313": {
+        "name": "taibee",
+        "endpoint": "IRONMAN"
+    },
+    "257109163300225026": {
+        "name": "mpkk",
+        "endpoint": "IRONMAN"
+    },
+    "387022438782730250": {
+        "name": "CK8",
+        "endpoint": "IRONMAN"
+    },
+    "132719627275993088": {
+        "name": "Weensie",
+        "endpoint": "IRONMAN"
+    },
+    "190891791292170240": {
+        "name": "Lyra BTW",
+        "endpoint": "IRONMAN"
+    },
+    "178316967051132928": {
+        "name": "Huge4theHCIM",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "337634080848084992": {
+        "name": "wuts a hcim",
+        "endpoint": "HARDCORE_IRONMAN"
+    },
+    "101503027147452416": {
+        "name": "GIM Waifu",
+        "endpoint": "IRONMAN"
+    },
+    "146268193961410561": {
+        "name": "Mudscape 17",
+        "endpoint": "IRONMAN"
+    },
+    "188961133279969280": {
+        "name": "RTFW",
+        "endpoint": "IRONMAN"
+    },
+    "284954579500662785": {
+        "name": "schlitz",
+        "endpoint": "IRONMAN"
+    },
+    "350728326886850571": {
+        "name": "swiftmaestro",
+        "endpoint": "IRONMAN"
+    },
+    "498745529467928586": {
+        "name": "nikkitynoov2",
+        "endpoint": "IRONMAN"
+    },
+    "371712881802346497": {
+        "name": "GIM Jens",
+        "endpoint": "IRONMAN"
+    },
+    "237673530722877440": {
+        "name": "IM Stewen",
+        "endpoint": "IRONMAN"
+    },
+    "159846139124908032": {
+        "name": "Ren Isshiki",
+        "endpoint": "IRONMAN"
+    },
+    "498617144528076800": {
+        "name": "whirlyb0i",
+        "endpoint": "IRONMAN"
+    },
+    "490929943048617994": {
+        "name": "Rzena",
+        "endpoint": "IRONMAN"
+    },
+    "797834611933446145": {
+        "name": "Part Two",
+        "endpoint": "IRONMAN"
+    },
+    "281176468749549568": {
+        "name": "Rephs",
+        "endpoint": "IRONMAN"
+    },
+    "635608854159163432": {
+        "name": "Mooja",
+        "endpoint": "IRONMAN"
+    },
+    "536348675761504276": {
+        "name": "SayLessl3",
         "endpoint": "IRONMAN"
     }
 }
